@@ -1,3 +1,25 @@
-body{
+. {
+
+
+}
+body {
     background: aqua;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+}
+
+.employeeCreateEditMovies {
+    display: grid;
+    gap: 5px; /* Adds spacing between elements */
+    padding: 15px; /* Adds padding inside the div */
+    width: 300px;
+    height: 800px;
+    background-color: red;
+    border-radius: 10px;
 }
