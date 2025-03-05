@@ -1,10 +1,7 @@
-. {
-
-
-}
 body {
-    background: aqua;
+    background: #3b4c66;
     font-family: 'Montserrat', sans-serif;
+    font-size: 2.5vh;
 }
 
 .main {
@@ -22,4 +19,34 @@ body {
     height: 800px;
     background-color: red;
     border-radius: 10px;
+}
+
+.show-movies-table{
+
+}
+
+.show-movies-table, th, td{
+    border: 0.25vh solid black;
+    border-collapse: collapse;
+    width: 70vw;
+    height: 5vh;
+}
+
+.show-movies-table tr:nth-child(even)   {
+    background-color: #fcfcfc;
+}
+
+.show-movies-table tr:nth-child(odd)   {
+    background-color: #b2b2b2;
+}
+
+th{
+    background-color: #556b8d;
+}
+
+.showMoviesTableDiv{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: 10vh;
 }
