@@ -1,29 +1,34 @@
-const listOfMovies = [];
-const showInfoTable = document.querySelector('#showMoviesTable');
 
-fetch('http://localhost:8080/movies')
-    .then(response => {
-        if(!response.ok) {
-            throw new Error('Could nok acces the movie database...');
-        }
-        return response.json();
-    })
-    .then(data => {
-        listOfMovies.push(...data);
-        console.log(listOfMovies);
-        populateTableOfMovies();
-    })
-    .catch(error => {
-        console.error('Could nok acces the movie database...', error);
-    });
+choice = "showMovies"
+
+switch (choice) {
 
 
+    case "showMovies":
+        const listOfMovies = [];
+        const showInfoTable = document.querySelector('#showMoviesTable');
 
-function populateTableOfMovies ()   {
-    listOfMovies.forEach(movie => {
-        let row = document.createElement('tr');
+        fetch('http://localhost:8080/movies')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Could nok acces the movie database...');
+                }
+                return response.json();
+            })
+            .then(data => {
+                listOfMovies.push(...data);
+                console.log(listOfMovies);
+                populateTableOfMovies();
+            })
+            .catch(error => {
+                console.error('Could nok acces the movie database...', error);
+            });
 
-        row.innerHTML = `
+    function populateTableOfMovies() {
+        listOfMovies.forEach(movie => {
+            let row = document.createElement('tr');
+
+            row.innerHTML = `
         <td>${movie.movieTitle}</td>
         <td>${movie.movieLength}</td>
         <td>${movie.description}</td>
@@ -33,6 +38,8 @@ function populateTableOfMovies ()   {
        
     `;
 
-        showInfoTable.appendChild(row);
-    })
+            showInfoTable.appendChild(row);
+        })
+
+    }
 }
