@@ -12,7 +12,7 @@ submitMovieButton.addEventListener("click", event => {
         movieDescription: employeeCreateMovies.elements["movieDescription"].value,
         ageRequirement: employeeCreateMovies.elements["ageRequirement"].value,
         moviePosterUrl: employeeCreateMovies.elements["moviePosterUrl"].value,
-      
+
     };
 
     console.log("Sending Data:", movie); // Debugging log

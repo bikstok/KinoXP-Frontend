@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async function(){
 
             document.getElementById("movieTitle")       .value = data.movieTitle || "";
             document.getElementById("movieLength")      .value = data.movieLength || "";
-            document.getElementById("description")      .value = data.description || "";
+            document.getElementById("movieDescription") .value = data.movieDescription || "";
             document.getElementById("ageRequirement")   .value = data.ageRequirement || "";
             document.getElementById("moviePosterUrl")   .value = data.moviePosterUrl || "";
         } catch (error){
@@ -77,7 +77,7 @@ switch (choice) {
             row.innerHTML = `
         <td>${movie.movieTitle}</td>
         <td>${movie.movieLength}</td>
-        <td>${movie.description}</td>
+        <td>${movie.movieDescription}</td>
         <td>${movie.ageRequirement}</td>
         <td>${movie.moviePosterUrl}</td>
         <td><button>Rediger</button></td>
