@@ -9,7 +9,7 @@ body {
         justify-content: center;
         align-items: center;
         height: 100vh;
-        background: linear-gradient(to right, #ff6666, #ff1a1a);
+        background: linear-gradient(to right, #6089b1, #0f68af);
     }
 
 
@@ -19,7 +19,7 @@ body {
     gap: 15px; /* More space between elements */
     padding: 20px;
     width: 350px;
-    background-color: #ff4d4d;
+    background-color: #fbfafa;
     border-radius: 12px;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
@@ -32,17 +32,19 @@ input {
     font-size: 16px;
     outline: none;
     transition: all 0.3s ease-in-out;
+    background-color: #4e4848;
+    color: white;
 }
 
 input:focus {
-    border-color: #ff4d4d; /* Changes color when focused */
-    box-shadow: 0 0 5px rgba(255, 77, 77, 0.5);
+    border-color: #4e4848; /* Changes color when focused */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
 }
 button {
     width: 100%;
     padding: 10px;
-    background: linear-gradient(to right, #ff4d4d, #ff1a1a);
-    color: white;
+    background: linear-gradient(to right, #6089b1, #0f68af);
+    color: black;
     font-size: 16px;
     border: none;
     border-radius: 5px;
@@ -51,11 +53,11 @@ button {
 }
 
 button:hover {
-    background: linear-gradient(to right, #ff6666, #ff3333);
+    background: linear-gradient(to right, #6089b1, #0f68af);
     transform: scale(1.05);
 }
 label {
     font-weight: 600;
-    color: white;
+    color: black;
     font-size: 14px;
 }
