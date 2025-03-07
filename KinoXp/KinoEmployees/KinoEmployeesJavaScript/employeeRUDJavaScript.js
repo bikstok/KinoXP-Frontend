@@ -3,7 +3,6 @@ choice = "showMovies"
 
 switch (choice) {
 
-
     case "showMovies":
         const listOfMovies = [];
         const showInfoTable = document.querySelector('#showMoviesTable');
