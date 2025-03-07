@@ -5,6 +5,32 @@
     <title>Title</title>
 </head>
 <body>
+<div class="main">
+    <form id="employeeCreateMovies">
+        <label>Film title</label>
+        <input type="text" id="movieTitle" name="movieTitle">
 
+        <label>Film længde</label>
+        <input type="number" id="movieLength" name="movieLength">
+
+        <label>Beskrivelse</label>
+        <input type="text" id="movieDescription" name="movieDescription">
+
+        <label>Aldersgrænse</label>
+        <select id="ageRequirement" name="ageRequirement">
+            <option hidden="hidden">Vælg aldersgrænse</option>
+            <option value="U12">U12</option>
+            <option value="U16">U16</option>
+            <option value="U18">U18</option>
+            <option value="Alle">Alle</option>
+        </select>
+
+        <label>Plakat URL/JPEG/PNG</label>
+        <input type="text" id="moviePosterUrl" name="moviePosterUrl">
+
+        <button type="button" id="submitButton">Opret Film</button>
+    </form>
+
+    <script src="../KinoEmployeesJavaScript/employeeMenu+CreateJavaScript.js"></script>
 </body>
 </html>
