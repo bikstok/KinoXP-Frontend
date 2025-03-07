@@ -11,7 +11,7 @@ switch (choice) {
         fetch('http://localhost:8080/movies')
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Could nok acces the movie database...');
+                    throw new Error('Promise not OK');
                 }
                 return response.json();
             })
@@ -21,7 +21,7 @@ switch (choice) {
                 populateTableOfMovies();
             })
             .catch(error => {
-                console.error('Could nok acces the movie database...', error);
+                console.error('Some error', error);
             });
 
     function populateTableOfMovies() {
