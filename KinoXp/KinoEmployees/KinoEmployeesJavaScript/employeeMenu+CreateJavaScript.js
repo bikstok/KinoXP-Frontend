@@ -1,5 +1,6 @@
 const submitMovieButton = document.querySelector('#submitButton');
 
+
 submitMovieButton.addEventListener("click", event => {
     event.preventDefault(); // Prevents unintended form submission (if necessary)
 
@@ -11,6 +12,7 @@ submitMovieButton.addEventListener("click", event => {
         movieDescription: employeeCreateMovies.elements["movieDescription"].value,
         ageRequirement: employeeCreateMovies.elements["ageRequirement"].value,
         moviePosterUrl: employeeCreateMovies.elements["moviePosterUrl"].value,
+      
     };
 
     console.log("Sending Data:", movie); // Debugging log
