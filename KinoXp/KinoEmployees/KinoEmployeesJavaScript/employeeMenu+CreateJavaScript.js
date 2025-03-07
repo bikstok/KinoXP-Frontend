@@ -1,17 +1,18 @@
 const submitMovieButton = document.querySelector('#submitButton');
 
-const employeeCreateEditMovies  = document.querySelector('#employeeCreateMovies');
+//Skal denne linje bruges?
+const employeeCreateEditMovie  = document.querySelector('#employeeCreateMovie');
 
 
 submitMovieButton.addEventListener("click", event => {
-    const employeeCreateMovies = document.querySelector('#employeeCreateMovies');
+    const employeeCreateMovie = document.querySelector('#employeeCreateMovie');
 
     const movie = {
-        movieTitle : employeeCreateMovies.movieTitle.value,
-        movieLength : employeeCreateMovies.movieLength.value,
-        movieDescription : employeeCreateMovies.movieDescription.value,
-        ageRequirement : employeeCreateMovies.ageRequirement.value,
-        moviePosterUrl : employeeCreateMovies.moviePosterUrl.value,
+        movieTitle : employeeCreateMovie.movieTitle.value,
+        movieLength : employeeCreateMovie.movieLength.value,
+        movieDescription : employeeCreateMovie.movieDescription.value,
+        ageRequirement : employeeCreateMovie.ageRequirement.value,
+        moviePosterUrl : employeeCreateMovie.moviePosterUrl.value,
     };
 
     console.log(movie);
