@@ -1,29 +1,30 @@
 body {
-
     background: #3b4c66;
     font-family: 'Montserrat', sans-serif;
     font-size: 2.5vh;
+    border: none;
 }
 
 .main {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background: linear-gradient(to right, #6089b1, #0f68af);
-    }
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #6089b1, #0f68af);
+    border: none;
+}
 
 .employeeCreateEditMovies {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* More space between elements */
+    gap: 10px; /* More space between elements */
     padding: 20px;
     width: 350px;
     background-color: #fbfafa;
     border-radius: 12px;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
+
 input {
     width: 95%;
     padding: 8px;
@@ -37,47 +38,32 @@ input {
     color: white;
 }
 
-
-.employeeCreateEditMovies {
-    display: grid;
-    gap: 5px; /* Adds spacing between elements */
-    padding: 15px; /* Adds padding inside the div */
-    width: 300px;
-    height: 800px;
-    background-color: red;
-    border-radius: 10px;
-}
-
-.show-movies-table{
-
-}
-
-.show-movies-table, th, td{
+.show-movies-table, th, td {
     border: 0.25vh solid black;
     border-collapse: collapse;
     width: 70vw;
     height: 5vh;
 }
 
-.show-movies-table tr:nth-child(even)   {
+.show-movies-table tr:nth-child(even) {
     background-color: #fcfcfc;
 }
 
-.show-movies-table tr:nth-child(odd)   {
+.show-movies-table tr:nth-child(odd) {
     background-color: #b2b2b2;
 }
 
-th{
+th {
     background-color: #556b8d;
 }
 
-.showMoviesTableDiv{
+.showMoviesTableDiv {
     display: flex;
     justify-content: center;
     position: relative;
     top: 10vh;
 }
-  
+
 input:focus {
     border-color: #4e4848; /* Changes color when focused */
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
@@ -99,7 +85,7 @@ button:hover {
     background: linear-gradient(to right, #6089b1, #0f68af);
     transform: scale(1.05);
 }
-  
+
 label {
     font-weight: 600;
     color: black;

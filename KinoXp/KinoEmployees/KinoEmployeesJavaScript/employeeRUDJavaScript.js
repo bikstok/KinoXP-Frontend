@@ -1,8 +1,35 @@
+//start of edit movie
 
+//loads movie elements - notice apiUrl = 1
+document.addEventListener("DOMContentLoaded", async function(){
+    const apiUrl = "http://localhost:8080/1";
+    const form = document.getElementById(("movieForm"));
+
+    async function fetchMovieData() {
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) throw new Error("Data can't be fetched yo");
+
+            const data = await response.json();
+            console.log("Tjekker lige API Response:", data);//tjekker lige om kaldet fungere
+
+            document.getElementById("movieTitle")       .value = data.movieTitle || "";
+            document.getElementById("movieLength")      .value = data.movieLength || "";
+            document.getElementById("description")      .value = data.description || "";
+            document.getElementById("ageRequirement")   .value = data.ageRequirement || "";
+            document.getElementById("moviePosterUrl")   .value = data.moviePosterUrl || "";
+        } catch (error){
+            console.error("Error fetching data", error);
+            alert("failed to load movie data.");
+        }
+    }
+    fetchMovieData();
+})
+
+//show movie js backend
 choice = "showMovies"
 
 switch (choice) {
-
 
     case "showMovies":
         const listOfMovies = [];
@@ -42,4 +69,5 @@ switch (choice) {
         })
 
     }
-}
+}//End of show-movie
+

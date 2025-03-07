@@ -4,25 +4,30 @@
     <meta charset="UTF-8">
     <title>employeeRUDPage</title>
     <link rel="stylesheet" href="../KinoEmployeesStyles/employeesStyles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
 </head>
 <body>
 <!--Rediger US04 - Rediger Film -->
 <div class="main">
-    <div class="employeeCreateEditMovies">
+    <form id="movieForm" class="employeeCreateEditMovies">
         <label>Film title</label>
-        <input type="text">
-        <label>Film længde</label>
-        <input type="text">
-        <label>Beskrivelse</label>
-        <input type="text">
-        <label>Aldersgrænse</label>
-        <input type="text">
-        <label>Plakat URL/JPEG/PNG</label>
-        <input type="text">
+        <input id="movieTitle" type="text">
 
-        <button>Opret film</button>
-    </div>
+        <label> Film længde</label>
+        <input id="movieLength" type="text">
+
+        <label> Beskrivelse</label>
+        <input id="description" type="text">
+
+        <label> Aldersgrænse</label>
+        <input id="ageRequirement" type="text">
+
+        <label> Plakat URL/JPEG/PNG</label>
+        <input id="moviePosterUrl" type="text">
+
+        <button>Rediger film</button>
+    </form>
 </div>
 <script src="../KinoEmployeesJavaScript/employeeRUDJavaScript.js"></script>
 </body>
