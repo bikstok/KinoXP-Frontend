@@ -73,7 +73,7 @@ switch (choice) {
             let deleteButton = document.createElement('button');
             deleteButton.textContent = "slet";
             deleteButton.addEventListener('click', () => {
-                deleteMovie(movie.movieId)
+                deleteMovie(movie)
             });
 
             row.innerHTML = `
@@ -93,23 +93,24 @@ switch (choice) {
 
 }
 
-function deleteMovie(movieId) {
-    if (!confirm("Er du sikker på, at du vil slette filmen?")) {
+// Sletter en film og sætter variablen inRotation til false i DB.
+function deleteMovie(movie) {
+    if (!confirm("Er du sikker på, at du vil slette filmen: " + movie.movieTitle)) {
         return;
     }
-    fetch(`http://localhost:8080/${movieId}`, {
+    fetch(`http://localhost:8080/${movie.movieId}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
 
             },
-            body: JSON.stringify({movieId: movieId})
+            body: JSON.stringify({movieId: movie.movieId})
         }
     ).then(response => {
         if (response.ok) {
-            console.log("Movie with id " + movieId + " set to inactive in database")
+            console.log("Movie with id " + movie.movieId + " set to inactive in database")
 
-            const rowToDelete = document.querySelector(`tr[data-id="${movieId}"]`);
+            const rowToDelete = document.querySelector(`tr[data-id="${movie.movieId}"]`);
 
             if (rowToDelete) {
                 rowToDelete.remove();
