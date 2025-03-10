@@ -1,4 +1,3 @@
-
 //Default elementer
 const moviesTableDiv = document.createElement("div");
 moviesTableDiv.id = "showMoviesTableDiv";
@@ -79,9 +78,20 @@ function populateTableOfMovies() {
     listOfMovies.forEach(movie => {
         let row = document.createElement('tr');
         row.setAttribute("data-id", movie.movieId);
+
         let deleteButton = document.createElement('button');
         deleteButton.innerHTML = "<i class=\"fa-solid fa-trash\"></i>";
         deleteButton.addEventListener('click', () => deleteMovie(movie));
+
+        //enabling the tdButton to handle onclick openEditModal
+        let tdButtonTd = document.createElement("td");
+        tdButtonTd.className = "td__buttonTd";
+
+        let editButton = document.createElement("button");
+        editButton.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
+        editButton.addEventListener("click",function (){
+            openEditModal(movie.movieId);
+        })
 
         row.innerHTML = `
         <td>${movie.movieTitle}</td>
@@ -89,9 +99,16 @@ function populateTableOfMovies() {
         <td>${movie.movieDescription}</td>
         <td>${movie.ageRequirement}</td>
         <td>${movie.moviePosterUrl}</td>
-        <td class="td__buttonTd"><button><i class="fa-solid fa-pen-to-square\"></i></button></td>`;
+        `;
 
-        row.children[5].appendChild(deleteButton);
+        // Append knapperne til knap-cellen
+        tdButtonTd.appendChild(editButton);
+        tdButtonTd.appendChild(deleteButton);
+
+        // Append knap-cellen til rækken
+        row.appendChild(tdButtonTd);
+
+        // Append rækken til tabellen
         showInfoTable.appendChild(row);
     });
 }
@@ -200,3 +217,109 @@ function formatScreeningTimeEnum(screeningTime) {
     return formattetScreeningTime
 }
 
+// Opens a modal that populates the data from the selected movie and then stores it
+function openEditModal(movieId) {
+    const rows = document.getElementById("showMoviesTable")
+    rows.style.display = "none";
+    fetch(`http://localhost:8080/${movieId}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            //alt logik her fra dom manipulationen
+            let editMovieModal = document.createElement("div");
+            editMovieModal.id = "employeeCreateEditMovie"
+
+            //Label og input til film titel:
+            let movieTitleLabel = document.createElement("label");
+            movieTitleLabel.innerText = "Film Titel";
+            let movieTitleInput = document.createElement("input");
+            movieTitleInput.type = "text";
+            movieTitleInput.id = "movieTitle";
+            movieTitleInput.name = "movieTitle";
+
+            //Label og input til film længde:
+            let movieLengthLabel = document.createElement("label")
+            movieLengthLabel.innerText = "Film længde"
+            let movieLengthInput = document.createElement("input")
+            movieLengthInput.type = "text";
+            movieLengthInput.id = "movieLength"
+            movieLengthInput.name = "movieLength"
+
+            //Label og input til film beskrivelse:
+            let movieDescriptionLabel = document.createElement("label");
+            movieDescriptionLabel.innerText = "Beskrivelse"
+            let movieDescriptionInput = document.createElement("input")
+            movieDescriptionInput.type = "text";
+            movieDescriptionInput.id = "movieDescription";
+            movieDescriptionInput.name = "movieDescription";
+
+            //label, select og option med loop: til alderskrav
+            let ageRequirementLabel = document.createElement("label")
+            ageRequirementLabel.innerText = "Vælg aldersgrænse"
+            let ageRequirementSelect = document.createElement("select")
+            ageRequirementSelect.id = "ageRequirement";
+            ageRequirementSelect.name = "ageRequirement";
+            let ageRequirementDropDown = document.createElement("option")
+            ageRequirementDropDown.hidden = true;
+            ageRequirementDropDown.innerText = "Vælg aldersgrænse"
+            ageRequirementSelect.appendChild(ageRequirementDropDown)
+            var ages = ["12", "16", "18", "0"]
+            for (var i = 0; i < ages.length; i++) {
+                var age = ages[i];
+                var option = document.createElement("option");
+                option.value = age;
+                option.innerText = age;
+                ageRequirementSelect.appendChild(option)
+            }
+
+            // label og input til plakat url
+            let moviePosterLabel = document.createElement("label")
+            moviePosterLabel.innerText = "Plakat URL/JPEG/PNG"
+            let moviePosterInput = document.createElement("input")
+            moviePosterInput.type = "text";
+            moviePosterInput.id = "moviePosterUrl";
+            moviePosterInput.name = "moviePosterUrl";
+
+            //så skal vi vel fylde vores nye layout ud med data fra filmen man har valgt.
+            movieTitleInput.value = data.movieTitle || "";
+            movieLengthInput.value = data.movieLength || "";
+            movieDescriptionInput.value = data.movieDescription || "";
+            ageRequirementSelect.value = data.ageRequirement || "";
+            moviePosterInput.value = data.moviePosterUrl || "";
+
+            //så skal vi skulle kunne gemme det.
+            let saveEditedFiles = document.createElement("button")
+            saveEditedFiles.type = "button";
+            saveEditedFiles.id = "saveEditedFiles";
+            saveEditedFiles.name = "saveEditedFiles";
+
+            editMovieModal.appendChild(movieTitleLabel);
+            editMovieModal.appendChild(movieTitleInput);
+            //tilføjer et linjeskift for testens skyld. Så kan vi altid kigge i styles senere:
+            editMovieModal.appendChild(document.createElement("br"));
+
+            editMovieModal.appendChild(movieLengthLabel);
+            editMovieModal.appendChild(movieLengthInput)
+            editMovieModal.appendChild(document.createElement("br"));
+
+            editMovieModal.appendChild(movieDescriptionLabel);
+            editMovieModal.appendChild(movieDescriptionInput);
+            editMovieModal.appendChild(document.createElement("br"));
+
+            editMovieModal.appendChild(ageRequirementLabel);
+            editMovieModal.appendChild(ageRequirementSelect);
+            editMovieModal.appendChild(document.createElement("br"));
+
+            editMovieModal.appendChild(moviePosterLabel);
+            editMovieModal.appendChild(moviePosterInput);
+            editMovieModal.appendChild(document.createElement("br"));
+
+            editMovieModal.appendChild(saveEditedFiles);
+
+            document.body.appendChild(editMovieModal);
+        })
+        .catch(error => {
+            console.error("Error fetching movie data:", error);
+        });
+
+}
