@@ -1,3 +1,35 @@
+
+//start of edit movie
+
+//loads movie elements - notice apiUrl = 1
+document.addEventListener("DOMContentLoaded", async function(){
+    const apiUrl = "http://localhost:8080/1";
+    const form = document.getElementById(("movieForm"));
+
+    async function fetchMovieData() {
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) throw new Error("Data can't be fetched yo");
+
+            const data = await response.json();
+            console.log("Tjekker lige API Response:", data);//tjekker lige om kaldet fungerer
+
+            document.getElementById("movieTitle")       .value = data.movieTitle || "";
+            document.getElementById("movieLength")      .value = data.movieLength || "";
+            document.getElementById("movieDescription") .value = data.movieDescription || "";
+            document.getElementById("ageRequirement")   .value = data.ageRequirement || "";
+            document.getElementById("moviePosterUrl")   .value = data.moviePosterUrl || "";
+        } catch (error){
+            console.error("Error fetching data", error);
+            alert("failed to load movie data.");
+        }
+    }
+    fetchMovieData();
+})
+
+//show movie js backend
+
+
 choice = "showMovies"
 
 switch (choice) {
@@ -14,7 +46,8 @@ switch (choice) {
                 return response.json();
             })
             .then(data => {
-                listOfMovies.push(...data);
+                const filteredMovies = data.filter(movie => movie.inRotation === true)
+                listOfMovies.push(...filteredMovies);
                 console.log(listOfMovies);
                 populateTableOfMovies();
             })
@@ -36,10 +69,11 @@ switch (choice) {
 
         listOfMovies.forEach(movie => {
             let row = document.createElement('tr');
+            row.setAttribute("data-id", movie.movieId);
             let deleteButton = document.createElement('button');
             deleteButton.innerHTML = "<i class=\"fa-solid fa-trash\"></i>";
             deleteButton.addEventListener('click', () => {
-                deleteMovie(movie.movieId)
+                deleteMovie(movie)
             });
 
             row.innerHTML = `
@@ -56,19 +90,36 @@ switch (choice) {
             showInfoTable.appendChild(row);
         })
     }
+
 }
 
-function deleteMovie(movieId) {
-    fetch(`http://localhost:8080/${movieId}`, {
+// Sletter en film og sætter variablen inRotation til false i DB.
+function deleteMovie(movie) {
+    if (!confirm("Er du sikker på, at du vil slette filmen: " + movie.movieTitle)) {
+        return;
+    }
+    fetch(`http://localhost:8080/${movie.movieId}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
 
             },
-            body: JSON.stringify({
-                movieId: movieId
-            })
+            body: JSON.stringify({movieId: movie.movieId})
         }
-    ).catch(error => {
+    ).then(response => {
+        if (response.ok) {
+            console.log("Movie with id " + movie.movieId + " set to inactive in database")
+
+            const rowToDelete = document.querySelector(`tr[data-id="${movie.movieId}"]`);
+
+            if (rowToDelete) {
+                rowToDelete.remove();
+            }else {
+                console.error("Failed to update DOM with deleted movie")
+            }
+        }
+    })
+        .catch(error => {
         console.log(error);})
 }
+
