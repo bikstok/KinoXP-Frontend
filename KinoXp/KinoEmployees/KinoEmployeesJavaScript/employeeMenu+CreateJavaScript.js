@@ -4,7 +4,7 @@ const submitMovieButton = document.querySelector('#submitButton');
 submitMovieButton.addEventListener("click", event => {
     event.preventDefault(); // Prevents unintended form submission (if necessary)
 
-    const employeeCreateMovies = document.querySelector('#employeeCreateMovies');
+    const employeeCreateMovies = document.querySelector('#movieForm');
 
     const movie = {
         movieTitle: employeeCreateMovies.elements["movieTitle"].value,
