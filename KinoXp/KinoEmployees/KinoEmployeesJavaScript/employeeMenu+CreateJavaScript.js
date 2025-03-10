@@ -12,7 +12,7 @@ function showMenu() {
 
     const createMovie = document.createElement("button");
     createMovie.id = "createMovie";
-    createMovie.classList = "menuButton"
+    createMovie.classList.add("menuButton")
     createMovie.innerText = "Opret Ny Film"
     createMovie.addEventListener("click", (e) => {
         createMovieForm()
@@ -20,7 +20,7 @@ function showMenu() {
 
     const createMovieScreening = document.createElement("button");
     createMovieScreening.id = "createMovieScreening";
-    createMovieScreening.classList = "menuButton"
+    createMovieScreening.classList.add("menuButton")
     createMovieScreening.innerText = "Opret Ny Filmvisning"
     createMovieScreening.addEventListener("click", (e) => {
         createMovieScreeningForm()
@@ -28,20 +28,20 @@ function showMenu() {
 
     const showMovies = document.createElement('a');
     showMovies.id = "showMovies";
-    showMovies.classList = "menuButton";
+    showMovies.classList.add("menuButton")
     showMovies.innerText = "Se Filmoversigt";
     showMovies.href = "dummyRUDPage.html?type=movies";
 
     const showMoviesScreening = document.createElement("a");
-    showMoviesScreening.id = "showMoviesScreening";
-    showMoviesScreening.classList = "menuButton";
+    showMoviesScreening.id = "showMovieScreening";
+    showMoviesScreening.classList.add("menuButton")
     showMoviesScreening.innerText = "Se Filmvisningsoversigt";
     showMoviesScreening.href = "dummyRUDPage.html?type=screenings";
 
 
     const showBookings = document.createElement('a');
     showBookings.id = "showBookings";
-    showBookings.classList = "menuButton"
+    showBookings.classList.add("menuButton")
     showBookings.innerText = "Se Bookingsoversigt"
 
     menuContainer.appendChild(createMovie);
@@ -235,6 +235,4 @@ function createMovieScreeningForm() {
 
     mainDiv.appendChild(creatMovieScreeningForm)
     document.body.appendChild(mainDiv);
-
-
 }
