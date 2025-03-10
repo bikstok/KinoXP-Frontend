@@ -1,0 +1,97 @@
+/* Link to Montserrat font */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+/* Global styles */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-image: url('https://cdn.craft.cloud/ae0be75a-6e4a-4123-ac90-f1c443d0df7f/assets/film/kinds-of-kindness/KOK_PAYOFF_ONLINE_POSTER_1334x2000_US_FIN_web.jpg?width=800&quality=80&fit=contain&s=CL5KV1KHrR5pmXrnJvv9fTa8gIRdltd9fYwEYvkuhEg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+}
+
+/* Common width for elements */
+.common-width {
+    width: 81%;
+    max-width: 1260px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/* Header styles */
+.header-div {
+    padding: 20px;
+    background-color: #ad4c4c;
+    color: #e8e7df;
+    text-align: center;
+    font-size: 32px;
+}
+
+/* Date div styles */
+.date-div {
+    padding: 10px;
+    background-color: #e8e7df;
+    color: #333;
+    text-align: center;
+    font-size: 18px;
+}
+
+/* Movie container styles */
+#movie-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1260px;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+/* Movie div styles */
+.movie-div {
+    background: #c58c8c;
+    border: 1px solid #ccc;
+    padding: 0px;
+    height: auto;
+    width: 250px;
+    border-radius: 8px;
+    margin-bottom: 1px;
+}
+
+/* Movie poster styles */
+.movie-div img {
+    width: 100%;
+    height: auto;
+}
+
+/* Movie title styles */
+.movie-div h3 {
+    text-align: center;
+}
+
+/* Auditorium info styles */
+.movie-div p {
+    font-size: 12px;
+    color: #555;
+}
+
+/* Screening times container styles */
+.screening-times-container {
+    margin-top: 16px;
+    background: #c58c8c;
+    padding: 8px;
+    color: #fff;
+}
+
+/* Time button styles */
+.screening-times-container button {
+    padding: 6px 12px;
+    margin-bottom: 6px;
+    background-color: #e8e7df;
+    color: #333;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+}
