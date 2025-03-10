@@ -20,8 +20,13 @@
         <label> Beskrivelse</label>
         <input id="movieDescription" type="text">
 
-        <label> Aldersgrænse</label>
-        <input id="ageRequirement" type="text">
+        <select id="ageRequirement" name="ageRequirement">
+            <option hidden="hidden">Vælg aldersgrænse</option>
+            <option value="12">12</option>
+            <option value="16">16</option>
+            <option value="18">18</option>
+            <option value="0">Alle</option>
+        </select>
 
         <label> Plakat URL/JPEG/PNG</label>
         <input id="moviePosterUrl" type="text">

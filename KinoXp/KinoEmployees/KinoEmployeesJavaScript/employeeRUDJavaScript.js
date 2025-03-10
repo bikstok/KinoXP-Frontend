@@ -21,10 +21,9 @@ document.addEventListener("DOMContentLoaded", async function(){
             document.getElementById("moviePosterUrl")   .value = data.moviePosterUrl || "";
         } catch (error){
             console.error("Error fetching data", error);
-            alert("failed to load movie data.");
+            alert("failed to DEEZ NUTS.");
         }
     }
-    fetchMovieData();
 })
 
 //show movie js backend

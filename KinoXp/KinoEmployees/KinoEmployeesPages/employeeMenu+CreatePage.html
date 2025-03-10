@@ -8,7 +8,7 @@
 <body>
 <div class="main">
 
-<form id="employeeCreateMovies">
+<form id="movieForm" class="employeeCreateEditMovies">
     <label>Film title</label>
     <input type="text" id="movieTitle" name="movieTitle">
 
@@ -18,7 +18,6 @@
     <label>Beskrivelse</label>
     <input type="text" id="movieDescription" name="movieDescription">
 
-    <label>Aldersgrænse</label>
     <select id="ageRequirement" name="ageRequirement">
         <option hidden="hidden">Vælg aldersgrænse</option>
         <option value="12">12</option>
@@ -33,6 +32,9 @@
     <button type="button" id="submitButton">Opret Film</button>
 </form>
 </div>
+
+
+
 <script src="../KinoEmployeesJavaScript/employeeMenu+CreateJavaScript.js"></script>
 
 </body>
