@@ -37,7 +37,7 @@ switch (choice) {
         listOfMovies.forEach(movie => {
             let row = document.createElement('tr');
             let deleteButton = document.createElement('button');
-            deleteButton.textContent = "slet";
+            deleteButton.innerHTML = "<i class=\"fa-solid fa-trash\"></i>";
             deleteButton.addEventListener('click', () => {
                 deleteMovie(movie.movieId)
             });
@@ -45,10 +45,10 @@ switch (choice) {
             row.innerHTML = `
         <td>${movie.movieTitle}</td>
         <td>${movie.movieLength}</td>
-        <td>${movie.description}</td>
+        <td>${movie.movieDescription}</td>
         <td>${movie.ageRequirement}</td>
         <td>${movie.moviePosterUrl}</td>
-        <td><button>Rediger</button></td>
+        <td><button><i class="fa-solid fa-pen-to-square"></i></button></td>
        
     `;
 
