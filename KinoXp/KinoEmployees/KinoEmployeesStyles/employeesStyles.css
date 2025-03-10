@@ -120,9 +120,24 @@ label {
 }
 
 .menuButton {
+    background: gray;
+    color: white;
+    width: 230%;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.5s ease-in-out;
+}
+.menuButton:hover {
+    background: #403d3d;
+}
+
+#showMovies, #showMovieScreening, #showBookings{
     background-color: gray;
     color: white;
-    width: 200%;
+    width: 220%;
     padding: 12px;
     font-size: 18px;
     border: none;
@@ -130,17 +145,9 @@ label {
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
 }
-
-#showMovies, #showMovieScreenings, #showBookings{
-    background-color: gray;
-    color: white;
-    width: 200%;
-    padding: 12px;
-    font-size: 18px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
+#showMovies:hover, #showMovieScreening:hover, #showBookings:hover {
+    background-color: #403d3d;
+    transform: scale(1.05);
 }
 
 
