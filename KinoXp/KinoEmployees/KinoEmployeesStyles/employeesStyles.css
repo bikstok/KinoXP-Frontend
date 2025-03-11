@@ -113,6 +113,7 @@ label {
     flex-direction: column;
     gap: 10px;
     padding: 20px;
+    width: 40%;
     background-color: transparent;
     color: white;
     border-radius: 12px;
@@ -120,13 +121,15 @@ label {
 }
 
 .menuButton {
+    font-family: 'Montserrat', sans-serif;
     background: gray;
     color: white;
-    width: 230%;
+    width: 100%;
     padding: 12px;
-    font-size: 18px;
+    font-size: 30px;
     border: none;
-    border-radius: 8px;
+    border-radius: 30px;
+    margin: 10px;
     cursor: pointer;
     transition: background-color 0.5s ease-in-out;
 }
@@ -135,15 +138,20 @@ label {
 }
 
 #showMovies, #showMovieScreening, #showBookings{
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    justify-content: center;
     background-color: gray;
     color: white;
-    width: 220%;
+    width: 96%;
     padding: 12px;
-    font-size: 18px;
+    font-size: 30px;
+    margin: 10px;
     border: none;
-    border-radius: 8px;
+    border-radius: 30px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
+    text-decoration: none;
 }
 #showMovies:hover, #showMovieScreening:hover, #showBookings:hover {
     background-color: #403d3d;
