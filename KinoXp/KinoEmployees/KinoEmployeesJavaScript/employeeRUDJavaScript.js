@@ -1,3 +1,4 @@
+
 //Default elementer
 const moviesTableDiv = document.createElement("div");
 moviesTableDiv.id = "showMoviesTableDiv";
@@ -321,5 +322,4 @@ function openEditModal(movieId) {
         .catch(error => {
             console.error("Error fetching movie data:", error);
         });
-
 }
