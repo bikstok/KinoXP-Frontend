@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return response.json();
             })
             .then(data => {
-                const filteredMovieScreenings = data.filter(movieScreening => movieScreening.hasPlayed === true)
+                const filteredMovieScreenings = data.filter(movieScreening => movieScreening.hasPlayed === false)
                 listOfMovieScreenings.push(...filteredMovieScreenings);
 
                 populateTableOfMovieScreenings();
@@ -102,7 +102,10 @@ function populateTableOfMovies() {
         tdButtonTd.appendChild(editButton);
         tdButtonTd.appendChild(deleteButton);
 
-        row.children[5].appendChild(deleteButton);
+        // Append knap-cellen til rækken
+        row.appendChild(tdButtonTd);
+
+        // Append rækken til tabellen
         showInfoTable.appendChild(row);
     });
 }
@@ -227,6 +230,8 @@ function openEditModal(movieId) {
             let editMovieModal = document.createElement("div");
             editMovieModal.id = "employeeCreateEditMovie"
 
+            editMovieModal.className ="employeeCreateEditMovies"
+
             //Label og input til film titel:
             let movieTitleLabel = document.createElement("label");
             movieTitleLabel.innerText = "Film Titel";
@@ -261,7 +266,8 @@ function openEditModal(movieId) {
             ageRequirementDropDown.hidden = true;
             ageRequirementDropDown.innerText = "Vælg aldersgrænse"
             ageRequirementSelect.appendChild(ageRequirementDropDown)
-            var ages = ["12", "16", "18", "0"]
+      
+            var ages = [10, 13, 18, 0]
             for (var i = 0; i < ages.length; i++) {
                 var age = ages[i];
                 var option = document.createElement("option");
@@ -287,9 +293,42 @@ function openEditModal(movieId) {
 
             //så skal vi skulle kunne gemme det.
             let saveEditedFiles = document.createElement("button")
+
+            saveEditedFiles.innerHTML ="Gem ændringer";
             saveEditedFiles.type = "button";
             saveEditedFiles.id = "saveEditedFiles";
             saveEditedFiles.name = "saveEditedFiles";
+
+            saveEditedFiles.addEventListener("click", () =>{
+
+                const updatedMovie = {
+                    movieId: movie.movieId,
+                    movieTitle: movieTitleInput.value,
+                    movieLength: movieLengthInput.value,
+                    movieDescription:movieDescriptionInput.value,
+                    ageRequirement:ageRequirementSelect.value,
+                    moviePosterUrl:moviePosterInput.value,
+                    inRotation: movie.inRotation
+                }
+
+                fetch("http://localhost:8080/updateMovie", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(updatedMovie)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Movie updated:", data);
+                        // Her kan du evt. opdatere DOM'en eller lukke modalen
+                    })
+                    .catch(error => {
+                        console.error("Error updating movie:", error);
+                    });
+
+                console.log(updatedMovie);
+            });
 
             editMovieModal.appendChild(movieTitleLabel);
             editMovieModal.appendChild(movieTitleInput);
