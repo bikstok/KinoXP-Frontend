@@ -41,6 +41,7 @@ moviesTableDiv.appendChild(showInfoTable);
 document.body.appendChild(moviesTableDiv);
 
 const listOfMovies = [];
+const listOfMovieScreenings = [];
 
 //Tjekker om det er movies eller screenings der er med som parametre
 document.addEventListener("DOMContentLoaded", () => {
@@ -58,14 +59,12 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(data => {
                 const filteredMovies = data.filter(movie => movie.inRotation === true)
                 listOfMovies.push(...filteredMovies);
-                console.log(listOfMovies);
                 populateTableOfMovies();
             })
             .catch(error => {
                 console.error('Some error', error);
             });
     } else if (type === "screenings") {
-        const listOfMovieScreenings = [];
 
         fetch('http://localhost:8080/showMovieScreenings')
             .then(response => {
@@ -75,11 +74,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 return response.json();
             })
             .then(data => {
-                const filteredMovieScreenings = data.filter(movieScreening => movieScreening.hasPlayed === true)
+                const filteredMovieScreenings = data.filter(movieScreening => movieScreening.hasPlayed === false)
                 listOfMovieScreenings.push(...filteredMovieScreenings);
-                listOfMovieScreenings.push(...data);
 
-                console.log(listOfMovieScreenings);
                 populateTableOfMovieScreenings();
             })
             .catch(error => {
@@ -143,31 +140,32 @@ function populateTableOfMovies() {
     });
 }
 
-//Virker ikke endnu - mangler endpoint i backenden
-const listOfMovieScreenings = [];
-
-fetch('http://localhost:8080/showMovieScreenings')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Promise not OK');
-        }
-        return response.json();
-    })
-    .then(data => {
-        // const filteredMovieScreenings = data.filter(movieScreening => movieScreening.hasPlayed === true)
-        // listOfMovieScreenings.push(...filteredMovieScreenings);
-        listOfMovieScreenings.push(...data);
-
-        console.log(listOfMovieScreenings);
-        populateTableOfMovieScreenings();
-    })
-    .catch(error => {
-        console.error('Some error', error);
-    });
+// //Virker ikke endnu - mangler endpoint i backenden
+//
+//
+// fetch('http://localhost:8080/showMovieScreenings')
+//     .then(response => {
+//         if (!response.ok) {
+//             throw new Error('Promise not OK');
+//         }
+//         return response.json();
+//     })
+//     .then(data => {
+//         // const filteredMovieScreenings = data.filter(movieScreening => movieScreening.hasPlayed === true)
+//         // listOfMovieScreenings.push(...filteredMovieScreenings);
+//         listOfMovieScreenings.push(...data);
+//
+//         console.log(listOfMovieScreenings);
+//         populateTableOfMovieScreenings();
+//     })
+//     .catch(error => {
+//         console.error('Some error', error);
+//     });
 
 
 //viser og populater filmvisningstabellen
 function populateTableOfMovieScreenings() {
+
     showInfoTable.innerHTML = "";
     let rowTitles = document.createElement("tr");
 
@@ -274,6 +272,7 @@ function formatScreeningTimeEnum(screeningTime) {
 
 // Opens a modal that populates the data from the selected movie and then stores it
 function openEditModal(movieId) {
+    console.log("Vi er inde i metoden")
     const rows = document.getElementById("showMoviesTable")
     rows.style.display = "none";
     fetch(`http://localhost:8080/${movieId}`)
