@@ -1,4 +1,3 @@
-
 //--------------------------------------------------------------------------------------------
 const commonWidth = '100%';
 const commonMaxWidth = '1260px';
@@ -10,328 +9,161 @@ const movieContainer = document.getElementById('movie-container');
 // Create headerDiv
 const headerDiv = document.createElement('div');
 headerDiv.textContent = 'BILLETTER TIL AKTUELLE FILM';
-headerDiv.style.width = commonWidth;
-headerDiv.style.maxWidth = commonMaxWidth;
-headerDiv.style.margin = '0 auto';
-headerDiv.style.padding = '20px';
-headerDiv.style.backgroundColor = '#ad4c4c';
-headerDiv.style.color = '#e8e7df';
-headerDiv.style.textAlign = 'center';
-headerDiv.style.fontFamily = 'Montserrat';
-headerDiv.style.fontSize = '32px';
-headerDiv.style.boxSizing = 'border-box';
+headerDiv.classList.add('header-div');
 
 // Create dateDiv
 const dateDiv = document.createElement('div');
 const today = new Date();
-const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+
 dateDiv.textContent = today.toLocaleDateString('da-DK', options);
-dateDiv.style.width = commonWidth;
-dateDiv.style.maxWidth = commonMaxWidth;
-dateDiv.style.margin = '0 auto';
-dateDiv.style.padding = '10px';
-dateDiv.style.backgroundColor = '#e8e7df';
-dateDiv.style.color = '#333';
-dateDiv.style.textAlign = 'center';
-dateDiv.style.fontFamily = 'Montserrat';
-dateDiv.style.fontSize = '18px';
-dateDiv.style.boxSizing = 'border-box';
+dateDiv.className = 'date-div';
+
+const dateInput = document.createElement('input');
+dateInput.type = 'date';
+
+// Set its initial value to today (ISO format)
+const todayISO = today.toISOString().split('T')[0];
+dateInput.value = todayISO;
+dateInput.className = 'date-input';
+
+// Create a wrapper inside the dateDiv for both text and input (optional but cleaner)
+const dateWrapper = document.createElement('div');
+dateWrapper.classList.add('date-wrapper');
+
+// Create a label for displaying the formatted date
+const dateLabel = document.createElement('div');
+dateLabel.textContent = today.toLocaleDateString('da-DK', options);
+dateWrapper.classList.add = ('date-label');
+
+// Clear dateDiv's content and append the wrapper
+dateDiv.textContent = '';  // Remove previous textContent
+dateWrapper.appendChild(dateLabel);  // Add the date text
+dateWrapper.appendChild(dateInput);  // Add the date input
+dateDiv.appendChild(dateWrapper);    // Add everything to the main dateDiv
 
 // Insert the divs into the body, above the movie container
 document.body.insertBefore(headerDiv, movieContainer);
 document.body.insertBefore(dateDiv, movieContainer);
 
+// When the user selects a different date
+dateInput.addEventListener('change', () => {
+    const selectedDate = dateInput.value;
 
-// Function to populate movies with their screenings
-function populateMoviesScreenings(movieData) {
-    movieData.forEach(movieScreening => {
-        // Create the movie div
-        const movieDiv = document.createElement('div');
-        movieDiv.style.background = '#c58c8c';
-        movieDiv.style.border = '1px solid #ccc';
-        movieDiv.style.padding = '0px';
-        movieDiv.style.height = 'auto'; // Adjust height automatically
-        movieDiv.style.width = '250px';
-        movieDiv.style.borderRadius = '8px';
-        movieDiv.style.marginBottom = '1px';
+    // Update the label showing the selected date in da-DK format
+    const selectedDateObj = new Date(selectedDate);
+    dateLabel.textContent = selectedDateObj.toLocaleDateString('da-DK', options);
 
-        // Create the movie poster
-        const poster = document.createElement('img');
-        poster.src = movieScreening.movie.moviePosterUrl; // Dynamic URL
-        poster.alt = 'https://poster.ebillet.dk/DieHard4k.hd.jpg';
-        poster.style.width = '100%';
-        poster.style.height = 'auto';
+    // Populate screenings for the selected date
+    populateMoviesScreenings(selectedDate);
+});
 
-        // Create the movie title
-        const title = document.createElement('h3');
-        title.textContent = movieScreening.movie.movieTitle;
-        title.style.textAlign = 'center';
+function groupByTitleAndDate(screenings) {
+    const moviesMap = new Map();
 
+    screenings.forEach(screening => {
+        const movieId = screening.movie.movieId;
+        const screeningDate = screening.screeningDate; // Assuming format "YYYY-MM-DD"
 
-        // Create the auditorium info
-        const auditoriumInfo = document.createElement('p');
-        auditoriumInfo.textContent = `Auditorium: ${movieScreening.auditorium.name} | Capacity: ${movieScreening.auditorium.seatingCapacity}`;
-        auditoriumInfo.style.fontSize = '12px';
-        auditoriumInfo.style.color = '#555';
+        if (!moviesMap.has(movieId)) {
+            moviesMap.set(movieId, {
+                movie: screening.movie,
+                dates: new Map()
+            });
+        }
 
-        // Create the screening times container
-        const screeningTimesContainer = document.createElement('div');
-        screeningTimesContainer.style.marginTop = '16px';
-        screeningTimesContainer.style.background = '#c58c8c'; // Background for screening times
-        screeningTimesContainer.style.padding = '8px';
-        screeningTimesContainer.style.color = '#fff'; // White text for better visibility
+        const movieGroup = moviesMap.get(movieId);
 
-        // Create a clickable time button
-        const timeButton = document.createElement('button');
-        timeButton.textContent = `Kl: ${movieScreening.screeningTime}`;
-        timeButton.style.padding = '6px 12px';
-        timeButton.style.marginBottom = '6px';
-        timeButton.style.backgroundColor = '#e8e7df';
-        timeButton.style.color = '#333';
-        timeButton.style.border = 'none';
-        timeButton.style.borderRadius = '50px'; // No rounded corners
-        timeButton.style.cursor = 'pointer';
+        if (!movieGroup.dates.has(screeningDate)) {
+            movieGroup.dates.set(screeningDate, []);
+        }
 
-        // Link to booking page with movieScreeningId as a query parameter
-        timeButton.onclick = function() {
-            window.location.href = `/booking-page?screeningId=${movieScreening.movieScreeningId}`;
-        };
-
-        // Append the time button to the screening times container
-        screeningTimesContainer.appendChild(timeButton);
-
-        // Append elements to the movieDiv
-        movieDiv.appendChild(poster);
-        movieDiv.appendChild(title);
-        movieDiv.appendChild(screeningTimesContainer);
-
-        // Append the movieDiv to the container in the HTML
-        movieContainer.appendChild(movieDiv);
+        movieGroup.dates.get(screeningDate).push(screening);
     });
+
+    return moviesMap;
 }
 
-// Example data for multiple movies with screening times
-const movieData = [
-    {
-        "movieScreeningId": 1,
-        "movie": {
-            "movieId": 1,
-            "movieTitle": "Mickey 17",
-            "movieLength": 120,
-            "movieDescription": "A thrilling adventure of a hero saving the world.",
-            "ageRequirement": 13,
-            "moviePosterUrl": "https://poster.ebillet.dk/mickey-17-2025.hd.jpg",
-            "inRotation": true
-        },
-        "screeningTime": "18:30",
-        "screeningDate": "2025-03-10",
-        "hasPlayed": false,
-        "auditorium": {
-            "auditoriumId": 1,
-            "auditoriumNumber": 1
-        }
-    },
-    {
-        "movieScreeningId": 2,
-        "movie": {
-            "movieId": 2,
-            "movieTitle": "Paddington",
-            "movieLength": 90,
-            "movieDescription": "An action-packed thriller.",
-            "ageRequirement": 16,
-            "moviePosterUrl": "https://poster.ebillet.dk/PigenMedNaalen-2025citat.hd.jpg",
-            "inRotation": true
-        },
-        "screeningTime": "20:00",
-        "screeningDate": "2025-03-11",
-        "hasPlayed": false,
-        "auditorium": {
-            "auditoriumId": 6,
-            "name": "Auditorium B",
-            "seatingCapacity": 200
-        }
-    },
-    {
-        "movieScreeningId": 2,
-        "movie": {
-            "movieId": 2,
-            "movieTitle": "Paddington",
-            "movieLength": 90,
-            "movieDescription": "An action-packed thriller.",
-            "ageRequirement": 16,
-            "moviePosterUrl": "https://poster.ebillet.dk/PigenMedNaalen-2025citat.hd.jpg",
-            "inRotation": true
-        },
-        "screeningTime": "20:00",
-        "screeningDate": "2025-03-11",
-        "hasPlayed": false,
-        "auditorium": {
-            "auditoriumId": 6,
-            "name": "Auditorium B",
-            "seatingCapacity": 200
-        }
-    },
-    {
-        "movieScreeningId": 2,
-        "movie": {
-            "movieId": 2,
-            "movieTitle": "Paddington",
-            "movieLength": 90,
-            "movieDescription": "An action-packed thriller.",
-            "ageRequirement": 16,
-            "moviePosterUrl": "https://poster.ebillet.dk/PigenMedNaalen-2025citat.hd.jpg",
-            "inRotation": true
-        },
-        "screeningTime": "20:00",
-        "screeningDate": "2025-03-11",
-        "hasPlayed": false,
-        "auditorium": {
-            "auditoriumId": 6,
-            "name": "Auditorium B",
-            "seatingCapacity": 200
-        }
-    },
-    {
-        "movieScreeningId": 2,
-        "movie": {
-            "movieId": 2,
-            "movieTitle": "Paddington",
-            "movieLength": 90,
-            "movieDescription": "An action-packed thriller.",
-            "ageRequirement": 16,
-            "moviePosterUrl": "https://poster.ebillet.dk/PigenMedNaalen-2025citat.hd.jpg",
-            "inRotation": true
-        },
-        "screeningTime": "20:00",
-        "screeningDate": "2025-03-11",
-        "hasPlayed": false,
-        "auditorium": {
-            "auditoriumId": 6,
-            "name": "Auditorium B",
-            "seatingCapacity": 200
-        }
-    },
-    {
-        "movieScreeningId": 2,
-        "movie": {
-            "movieId": 2,
-            "movieTitle": "Paddington",
-            "movieLength": 90,
-            "movieDescription": "An action-packed thriller.",
-            "ageRequirement": 16,
-            "moviePosterUrl": "https://poster.ebillet.dk/PigenMedNaalen-2025citat.hd.jpg",
-            "inRotation": true
-        },
-        "screeningTime": "20:00",
-        "screeningDate": "2025-03-11",
-        "hasPlayed": false,
-        "auditorium": {
-            "auditoriumId": 6,
-            "name": "Auditorium B",
-            "seatingCapacity": 200
-        }
-    },
-    {
-        "movieScreeningId": 2,
-        "movie": {
-            "movieId": 2,
-            "movieTitle": "Paddington",
-            "movieLength": 90,
-            "movieDescription": "An action-packed thriller.",
-            "ageRequirement": 16,
-            "moviePosterUrl": "https://poster.ebillet.dk/PigenMedNaalen-2025citat.hd.jpg",
-            "inRotation": true
-        },
-        "screeningTime": "20:00",
-        "screeningDate": "2025-03-11",
-        "hasPlayed": false,
-        "auditorium": {
-            "auditoriumId": 6,
-            "name": "Auditorium B",
-            "seatingCapacity": 200
-        }
-    },
-    {
-        "movieScreeningId": 2,
-        "movie": {
-            "movieId": 2,
-            "movieTitle": "Paddington",
-            "movieLength": 90,
-            "movieDescription": "An action-packed thriller.",
-            "ageRequirement": 16,
-            "moviePosterUrl": "https://poster.ebillet.dk/PigenMedNaalen-2025citat.hd.jpg",
-            "inRotation": true
-        },
-        "screeningTime": "20:00",
-        "screeningDate": "2025-03-11",
-        "hasPlayed": false,
-        "auditorium": {
-            "auditoriumId": 6,
-            "name": "Auditorium B",
-            "seatingCapacity": 200
-        }
-    },
-    {
-        "movieScreeningId": 2,
-        "movie": {
-            "movieId": 2,
-            "movieTitle": "Paddington",
-            "movieLength": 90,
-            "movieDescription": "An action-packed thriller.",
-            "ageRequirement": 16,
-            "moviePosterUrl": "https://poster.ebillet.dk/PigenMedNaalen-2025citat.hd.jpg",
-            "inRotation": true
-        },
-        "screeningTime": "20:00",
-        "screeningDate": "2025-03-11",
-        "hasPlayed": false,
-        "auditorium": {
-            "auditoriumId": 6,
-            "name": "Auditorium B",
-            "seatingCapacity": 200
-        }
-    },
-    {
-        "movieScreeningId": 2,
-        "movie": {
-            "movieId": 2,
-            "movieTitle": "Paddington",
-            "movieLength": 90,
-            "movieDescription": "An action-packed thriller.",
-            "ageRequirement": 16,
-            "moviePosterUrl": "https://poster.ebillet.dk/PigenMedNaalen-2025citat.hd.jpg",
-            "inRotation": true
-        },
-        "screeningTime": "20:00",
-        "screeningDate": "2025-03-11",
-        "hasPlayed": false,
-        "auditorium": {
-            "auditoriumId": 6,
-            "name": "Auditorium B",
-            "seatingCapacity": 200
-        }
-    },
-    {
-        "movieScreeningId": 2,
-        "movie": {
-            "movieId": 2,
-            "movieTitle": "Paddington",
-            "movieLength": 90,
-            "movieDescription": "An action-packed thriller.",
-            "ageRequirement": 16,
-            "moviePosterUrl": "https://poster.ebillet.dk/PigenMedNaalen-2025citat.hd.jpg",
-            "inRotation": true
-        },
-        "screeningTime": "20:00",
-        "screeningDate": "2025-03-11",
-        "hasPlayed": false,
-        "auditorium": {
-            "auditoriumId": 6,
-            "name": "Auditorium B",
-            "seatingCapacity": 200
-        }
-    }
-];
+// Function to populate movies with their screenings
+function populateMoviesScreenings(selectedDate) {
+    let movieScreenings = [];
+
+    fetch('http://localhost:8080/showMovieScreenings')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Promise not OK');
+            }
+            return response.json();
+        })
+        .then(data => {
+            movieScreenings = data.filter(movieScreening => movieScreening.hasPlayed === false);
+            console.log(movieScreenings);
+
+            const groupedMovies = groupByTitleAndDate(movieScreenings);
+
+            // Clear the container before adding new elements
+            movieContainer.innerHTML = '';
+
+            // Loop through each movie
+            groupedMovies.forEach(({ movie, dates }) => {
+
+                // Only proceed if there are screenings for the selected date
+                if (!dates.has(selectedDate)) {
+                    return; // Skip this movie if no screenings on the selected date
+                }
+
+                const screenings = dates.get(selectedDate);
+
+                // Create the movie div
+                const movieDiv = document.createElement('div');
+                movieDiv.classList.add('movie-div');
+
+                // Create the movie poster
+                const poster = document.createElement('img');
+                poster.src = movie.moviePosterUrl;
+
+                // Create the movie title
+                const title = document.createElement('h3');
+                title.textContent = movie.movieTitle;
+
+                // Create the screening times container
+                const screeningTimesContainer = document.createElement('div');
+                screeningTimesContainer.classList.add('screening-times-container');
+
+                // Loop through each screening for this movie on the selected date
+                screenings.forEach(screening => {
+                    const timeButton = document.createElement('button');
+                    const formattedTime = formatScreeningTimeEnum(screening.screeningTime);
+
+                    timeButton.textContent = `${formattedTime}`;
+
+                    timeButton.onclick = function () {
+                        window.location.href = `/booking-page?screeningId=${screening.movieScreeningId}`;
+                    };
+
+                    screeningTimesContainer.appendChild(timeButton);
+                });
+
+                // Append elements to movieDiv
+                movieDiv.appendChild(poster);
+                movieDiv.appendChild(title);
+                movieDiv.appendChild(screeningTimesContainer);
+
+                // Append movieDiv to the main container
+                movieContainer.appendChild(movieDiv);
+            });
+        });
+}
+
+function formatScreeningTimeEnum(screeningTime) {
+    screeningTime.split();
+    let formattetScreeningTime = "";
+
+    formattetScreeningTime = screeningTime[5] + screeningTime[6] + "." + screeningTime[8] + screeningTime[9];
+
+    return formattetScreeningTime
+}
 
 // Populate movies with screening times
-populateMoviesScreenings(movieData);
+const todayDate = new Date().toISOString().split('T')[0];
+populateMoviesScreenings(todayDate);

@@ -22,20 +22,53 @@ body {
 
 /* Header styles */
 .header-div {
+    width: 100%;
+    max-width: 1260px;
+    margin: 0 auto;
     padding: 20px;
     background-color: #ad4c4c;
     color: #e8e7df;
     text-align: center;
     font-size: 32px;
+    box-sizing: border-box;
 }
 
 /* Date div styles */
 .date-div {
+    width: 100%;
+    max-width: 1260px;
+    margin: 0 auto;
     padding: 10px;
     background-color: #e8e7df;
     color: #333;
     text-align: center;
     font-size: 18px;
+    box-sizing: border-box;
+}
+
+/* Date input and label wrapper */
+.date-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Date label styles */
+.date-label {
+    font-weight: bold;
+}
+
+/* Date input styles */
+.date-input {
+    padding: 4px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    background-color: #ffffff;
+    color: #333;
+    cursor: pointer;
 }
 
 /* Movie container styles */
@@ -52,29 +85,25 @@ body {
 /* Movie div styles */
 .movie-div {
     background: #c58c8c;
-    border: 1px solid #ccc;
+    border: 0.5px solid #ccc;
     padding: 0px;
     height: auto;
     width: 250px;
-    border-radius: 8px;
+    border-radius: 0px;
     margin-bottom: 1px;
 }
 
 /* Movie poster styles */
 .movie-div img {
-    width: 100%;
-    height: auto;
+    width: 250px;
+    height: 370px;
 }
 
 /* Movie title styles */
 .movie-div h3 {
     text-align: center;
-}
-
-/* Auditorium info styles */
-.movie-div p {
-    font-size: 12px;
-    color: #555;
+    font-size: 16px;
+    height: auto;
 }
 
 /* Screening times container styles */
@@ -87,11 +116,13 @@ body {
 
 /* Time button styles */
 .screening-times-container button {
-    padding: 6px 12px;
+    padding: 6px 32.3px;
     margin-bottom: 6px;
+    margin-left: 10px;
+    margin-right: 8px;
     background-color: #e8e7df;
     color: #333;
     border: none;
-    border-radius: 50px;
+    border-radius: 3px;
     cursor: pointer;
 }
