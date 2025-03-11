@@ -4,8 +4,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+// <button className="hamburger">
+//     <!-- material icons https://material.io/resources/icons/ -->
+//     <i className="menuIcon material-icons">menu</i>
+//     <i className="closeIcon material-icons">close</i>
+// </button>
+
 function showMenu() {
     const mainDiv = document.querySelector('.main');
+
+    // const burgerMenu = document.createElement('button');
+    // const burgerMenuIcon = document.createElement('i');
+    // burgerMenuIcon.classList.add("menuIcon material-icons")
+    //
+    // burgerMenu.appendChild(burgerMenuIcon)
+
+
+
+
 
     const menuContainer = document.createElement("div");
     menuContainer.id = "menuContainer";
@@ -197,9 +213,11 @@ function createMovieScreeningForm() {
         creatMovieScreeningForm.remove();
         menuContainer.style.display = "flex";
     })
+
+    //Movie objekter
     const movieTitleLabel = document.createElement('label');
     movieTitleLabel.textContent = 'Film titel';
-    const movieTitle = document.createElement("select")
+    const movie = document.createElement("select")
 
     const auditoriumLabel = document.createElement("label");
     auditoriumLabel.textContent = 'Film sal';
@@ -211,7 +229,8 @@ function createMovieScreeningForm() {
 
     const screeningDateLabel = document.createElement("label");
     screeningDateLabel.textContent = 'Dato';
-    const screeningDate = document.createElement("select");
+    const screeningDate = document.createElement("input");
+    screeningDate.type = 'date';
 
     const submitButton = document.createElement('button');
     submitButton.type = 'button';
@@ -221,7 +240,7 @@ function createMovieScreeningForm() {
 
     creatMovieScreeningForm.appendChild(closeButton)
     creatMovieScreeningForm.appendChild(movieTitleLabel);
-    creatMovieScreeningForm.appendChild(movieTitle);
+    creatMovieScreeningForm.appendChild(movie);
     creatMovieScreeningForm.appendChild(auditoriumLabel);
     creatMovieScreeningForm.appendChild(auditorium);
     creatMovieScreeningForm.appendChild(screeningTimeLabel);
@@ -235,4 +254,37 @@ function createMovieScreeningForm() {
 
     mainDiv.appendChild(creatMovieScreeningForm)
     document.body.appendChild(mainDiv);
+
+    submitButton.addEventListener("click", () => {
+
+        const movieScreening = {
+            movie: {
+                movieTitle: movie.movieTitle,
+                movieLength: movie.movieLength,
+                movieDescription: movie.movieDescription,
+                ageRequirement: movie.ageRequirement,
+                moviePosterUrl: movie.moviePosterUrl,
+                inRotation: movie.inRotation
+            },
+            auditorium: {
+                auditoriumNumber: auditorium.auditoriumNumber
+            },
+            screeningTime: screeningTime,
+            screeningDate: screeningDate,
+            hasPlayed: false
+        }
+
+
+        fetch("http://localhost:8080/movieScreening", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(movieScreening)
+        }).then(response => {
+            if (!response.ok) {
+                console.log("Error:", response.status);
+            } else {
+                alert("Filmvisningen er blevet oprettet")
+            }
+        })
+    })
 }
