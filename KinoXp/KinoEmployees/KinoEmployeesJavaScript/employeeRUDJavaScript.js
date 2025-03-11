@@ -129,20 +129,35 @@ function populateTableOfMovieScreenings() {
         let row = document.createElement('tr');
         row.setAttribute("data-id", movieScreening.movieScreeningId);
         let deleteButton = document.createElement('button');
+        deleteButton.className = "td__buttonTd";
         deleteButton.innerHTML = "<i class=\"fa-solid fa-trash\"></i>";
         deleteButton.addEventListener('click', () => {
             deleteMovieScreening(movieScreening)
         });
+
+        let tdButtonTd = document.createElement("td");
+        tdButtonTd.className = "td__buttonTd";
+
+        let editButton = document.createElement("button");
+        editButton.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
+        editButton.className = "td__buttonTd";
+        editButton.addEventListener("click",function (){
+            updateMovieScreeningForm();
+        })
 
         row.innerHTML = `
         <td>${movieScreening.movie.movieTitle}</td>
         <td>${movieScreening.screeningDate}</td>
         <td>${formatScreeningTimeEnum(movieScreening.screeningTime) || "Unkown time"}</td>
         <td>${movieScreening.auditorium.auditoriumNumber}</td>
-        <td><button><i class="fa-solid fa-pen-to-square"></i></button></td> 
     `;
-        row.children[4].appendChild(deleteButton);
+        // Append knapperne til knap-cellen
+        tdButtonTd.appendChild(editButton);
+        tdButtonTd.appendChild(deleteButton);
         showInfoTable.appendChild(row);
+
+        // Append knap-cellen til rækken
+        row.appendChild(tdButtonTd);
     })
 }
 
@@ -358,4 +373,64 @@ function openEditModal(movieId) {
         .catch(error => {
             console.error("Error fetching movie data:", error);
         });
+}
+
+//Tilføjelse af modalet til DOM'en omkring redigering af filmvisninger
+function updateMovieScreeningForm() {
+
+    const showMoviesTableDiv = document.getElementById("showMoviesTableDiv");
+    showMoviesTableDiv.style.display = "none";
+
+    const mainDiv = document.createElement("div");
+    mainDiv.className = ".main";
+
+    const creatMovieScreeningForm = document.createElement('form');
+    creatMovieScreeningForm.id = "movieForm";
+    creatMovieScreeningForm.classList.add('employeeCreateEditMovies');
+
+    const closeButton = document.createElement("button");
+    closeButton.innerHTML = "X"
+    closeButton.classList.add("closeButton");
+    closeButton.addEventListener("click", (e) => {
+        creatMovieScreeningForm.remove();
+        showMoviesTableDiv.style.display = "flex";
+    })
+    const movieTitleLabel = document.createElement('label');
+    movieTitleLabel.textContent = 'Film titel';
+    const movieTitle = document.createElement("select")
+
+    const auditoriumLabel = document.createElement("label");
+    auditoriumLabel.textContent = 'Film sal';
+    const auditorium = document.createElement("select");
+
+    const screeningTimeLabel = document.createElement("label");
+    screeningTimeLabel.textContent = 'Tidspunkt';
+    const screeningTime = document.createElement("select");
+
+    const screeningDateLabel = document.createElement("label");
+    screeningDateLabel.textContent = 'Dato';
+    const screeningDate = document.createElement("select");
+
+    const submitButton = document.createElement('button');
+    submitButton.type = 'button';
+    submitButton.id = 'submitButton';
+    submitButton.textContent = 'Opret Filmvisning';
+
+
+    creatMovieScreeningForm.appendChild(closeButton)
+    creatMovieScreeningForm.appendChild(movieTitleLabel);
+    creatMovieScreeningForm.appendChild(movieTitle);
+    creatMovieScreeningForm.appendChild(auditoriumLabel);
+    creatMovieScreeningForm.appendChild(auditorium);
+    creatMovieScreeningForm.appendChild(screeningTimeLabel);
+    creatMovieScreeningForm.appendChild(screeningTime);
+    creatMovieScreeningForm.appendChild(screeningDateLabel);
+    creatMovieScreeningForm.appendChild(screeningDate);
+
+
+    creatMovieScreeningForm.appendChild(submitButton);
+
+
+    mainDiv.appendChild(creatMovieScreeningForm)
+    document.body.appendChild(mainDiv);
 }

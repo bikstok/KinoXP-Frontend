@@ -70,7 +70,9 @@ td button  {
 }
 
 .td__buttonTd   {
-    width: 10%;
+    width: 20%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 .showMoviesTableDiv {
