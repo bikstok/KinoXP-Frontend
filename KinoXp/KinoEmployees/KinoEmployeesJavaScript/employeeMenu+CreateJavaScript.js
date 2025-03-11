@@ -14,15 +14,45 @@ function showMenu() {
     const mainDiv = document.querySelector('.main');
 
     const burgerMenu = document.createElement('button');
+    burgerMenu.classList.add("burger-menu");
+
+
     const burgerMenuIcon = document.createElement('i');
-    burgerMenuIcon.classList.add("menuIcon material-icons")
+    burgerMenuIcon.classList.add("material-icons")
+    burgerMenuIcon.innerText = "menu";
 
     burgerMenu.appendChild(burgerMenuIcon)
-    document.body.appendChild(burgerMenu)
-    burgerMenu.textContent = 'Menu';
+    mainDiv.    appendChild(burgerMenu)
 
 
+    burgerMenu.addEventListener('click', (e) => {
 
+        let existingModal = document.querySelector('.pop-up');
+
+        if (existingModal) {
+
+            existingModal.remove();
+
+            burgerMenuIcon.innerText = "menu";
+        } else {
+
+            burgerMenuIcon.innerText = "close";
+
+
+            const popUpModal = document.createElement("div");
+            popUpModal.classList.add("pop-up");
+
+
+            const logOutButton = document.createElement("button");
+            logOutButton.classList.add("logOutButton");
+            logOutButton.innerText = "Logout";
+
+
+            popUpModal.append(logOutButton);
+
+            mainDiv.append(popUpModal);
+        }
+    });
 
 
 

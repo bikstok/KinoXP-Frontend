@@ -3,6 +3,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-size: 2.5vh;
     border: none;
+    margin: 0;
 }
 
 .main {
@@ -10,7 +11,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(to right, #6089b1, #0f68af);
+    background: #3c4d67;
     border: none;
 }
 
@@ -83,7 +84,7 @@ td button  {
 }
 
 input:focus {
-    border-color: #4e4848; /* Changes color when focused */
+    border-color: #4e4848;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -124,7 +125,7 @@ label {
 
 .menuButton {
     font-family: 'Montserrat', sans-serif;
-    background: gray;
+    background: #393b3e;
     color: white;
     width: 100%;
     padding: 12px;
@@ -133,7 +134,7 @@ label {
     border-radius: 30px;
     margin: 10px;
     cursor: pointer;
-    transition: background-color 0.5s ease-in-out;
+
 }
 .menuButton:hover {
     background: #403d3d;
@@ -143,7 +144,7 @@ label {
     font-family: 'Montserrat', sans-serif;
     display: flex;
     justify-content: center;
-    background-color: gray;
+    background-color: #393b3e;
     color: white;
     width: 96%;
     padding: 12px;
@@ -152,8 +153,8 @@ label {
     border: none;
     border-radius: 30px;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
     text-decoration: none;
+    transition: all 0.3s ease;
 }
 #showMovies:hover, #showMovieScreening:hover, #showBookings:hover {
     background-color: #403d3d;
@@ -180,10 +181,10 @@ label {
 select {
     width: 100%;
     padding: 10px;
-    border: 1px solid #4e4848; /* Passer med inputfelterne */
+    border: 1px solid #4e4848;
     border-radius: 5px;
-    background-color: #4e4848; /* Passer med baggrundsfarven på inputfelterne */
-    color: white; /* Hvid tekst */
+    background-color: #4e4848;
+    color: white;
     font-size: 16px;
     appearance: none;
     -webkit-appearance: none;
@@ -212,4 +213,63 @@ option {
 
 option:hover {
     background-color: #3b4c66;
+}
+
+.burger-menu {
+    width: 3%;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: transparent;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    z-index: 1000;
+}
+
+.burger-menu:hover {
+    background: none;
+    transform: scale(1.10);
+}
+
+.burger-menu i {
+    font-size: 50px;
+}
+
+.pop-up{
+    position: fixed;
+    top: -100px;
+    left: -100px;
+    background: #393b3e;
+    width: 20%;
+    height: 40%;
+    border-radius: 50%;
+}
+
+.logOutButton {
+    position: absolute;
+    bottom: 35%;
+    left: 40%;
+    background: #3c4d67;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 25px;
+    cursor: pointer;
+    width: 80%;
+    text-align: center;
+}
+
+
+.logOutButton:hover {
+    background: #3c4d67;
+    transform: scale(1.05);
 }
