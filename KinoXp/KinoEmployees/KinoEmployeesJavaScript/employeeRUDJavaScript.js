@@ -1,3 +1,32 @@
+//
+// //start of edit movie
+//
+// //loads movie elements - notice apiUrl = 1
+// document.addEventListener("DOMContentLoaded", async function(){
+//     const apiUrl = "http://localhost:8080/1";
+//     const form = document.getElementById(("movieForm"));
+//
+//     async function fetchMovieData() {
+//         try {
+//             const response = await fetch(apiUrl);
+//             if (!response.ok) throw new Error("Data can't be fetched yo");
+//
+//             const data = await response.json();
+//             console.log("Tjekker lige API Response:", data);//tjekker lige om kaldet fungerer
+//
+//             document.getElementById("movieTitle")       .value = data.movieTitle || "";
+//             document.getElementById("movieLength")      .value = data.movieLength || "";
+//             document.getElementById("movieDescription") .value = data.movieDescription || "";
+//             document.getElementById("ageRequirement")   .value = data.ageRequirement || "";
+//             document.getElementById("moviePosterUrl")   .value = data.moviePosterUrl || "";
+//         } catch (error){
+//             console.error("Error fetching data", error);
+//             alert("failed to DEEZ NUTS.");
+//         }
+//     }
+// })
+//
+// //show movie js backend
 
 //Default elementer
 const moviesTableDiv = document.createElement("div");
@@ -205,7 +234,33 @@ function deleteMovie(movie) {
 }
 
 function deleteMovieScreening(movieScreening) {
-    //Mangler funktionalitet til at slette.
+    console.log("Vi når ind i metoden")
+    if (!confirm("Er du sikker på, at du vil slette filvisningen: " + movieScreening.movieTitle)) {
+        return;
+    }
+    fetch(`http://localhost:8080/deactivateMovieScreening${movieScreening.movieScreeningId}`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({movieScreeningId: movieScreening.movieScreeningId})
+        }
+    ).then(response => {
+        if (response.ok) {
+            console.log("Movie screening with id " + movieScreening.movieScreeningId + " set to inactive in database")
+
+            const rowToDelete = document.querySelector(`tr[data-id="${movieScreening.movieScreeningId}"]`);
+
+            if (rowToDelete) {
+                rowToDelete.remove();
+            } else {
+                console.error("Failed to update DOM with deleted movie")
+            }
+        }
+    })
+        .catch(error => {
+            console.log(error);
+        })
 }
 
 //Formatter - TIME_12_00 til 12:00
