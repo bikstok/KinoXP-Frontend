@@ -17,12 +17,13 @@ body {
 .employeeCreateEditMovies {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* More space between elements */
+    gap: 10px;
     padding: 20px;
     width: 350px;
     background-color: #fbfafa;
     border-radius: 12px;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 
 input {
@@ -41,8 +42,8 @@ input {
 .show-movies-table, th, td {
     border: 0.25vh solid black;
     border-collapse: collapse;
-    width: 70vw;
-    height: 5vh;
+    width: 80%;
+    table-layout: fixed;
 }
 
 .show-movies-table tr:nth-child(even) {
@@ -55,6 +56,21 @@ input {
 
 th {
     background-color: #556b8d;
+}
+
+td{
+    text-align: center;
+    word-break: break-word;
+}
+
+td button  {
+    width: 20%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.td__buttonTd   {
+    width: 10%;
 }
 
 .showMoviesTableDiv {
@@ -90,4 +106,100 @@ label {
     font-weight: 600;
     color: black;
     font-size: 14px;
+}
+
+#menuContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    background-color: transparent;
+    color: white;
+    border-radius: 12px;
+
+}
+
+.menuButton {
+    background: gray;
+    color: white;
+    width: 230%;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.5s ease-in-out;
+}
+.menuButton:hover {
+    background: #403d3d;
+}
+
+#showMovies, #showMovieScreening, #showBookings{
+    background-color: gray;
+    color: white;
+    width: 220%;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+#showMovies:hover, #showMovieScreening:hover, #showBookings:hover {
+    background-color: #403d3d;
+    transform: scale(1.05);
+}
+
+
+.closeButton {
+    position: absolute;
+    top: -5px;
+    right: -180px;
+    font-size: 24px;
+    cursor: pointer;
+    color: black;
+    background-color: transparent;
+    background: none;
+}
+
+.closeButton:hover {
+    color: red;
+    background: none;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #4e4848; /* Passer med inputfelterne */
+    border-radius: 5px;
+    background-color: #4e4848; /* Passer med baggrundsfarven på inputfelterne */
+    color: white; /* Hvid tekst */
+    font-size: 16px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+
+select:hover {
+    border-color: #3b4c66;
+}
+select:focus {
+    outline: none;
+    border-color: #6089b1;
+    box-shadow: 0 0 5px rgba(72, 162, 66, 0.5);
+}
+
+
+option {
+    background-color: #4e4848;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+}
+
+option:hover {
+    background-color: #3b4c66;
 }
