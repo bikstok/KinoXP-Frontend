@@ -1,33 +1,3 @@
-//
-// //start of edit movie
-//
-// //loads movie elements - notice apiUrl = 1
-// document.addEventListener("DOMContentLoaded", async function(){
-//     const apiUrl = "http://localhost:8080/1";
-//     const form = document.getElementById(("movieForm"));
-//
-//     async function fetchMovieData() {
-//         try {
-//             const response = await fetch(apiUrl);
-//             if (!response.ok) throw new Error("Data can't be fetched yo");
-//
-//             const data = await response.json();
-//             console.log("Tjekker lige API Response:", data);//tjekker lige om kaldet fungerer
-//
-//             document.getElementById("movieTitle")       .value = data.movieTitle || "";
-//             document.getElementById("movieLength")      .value = data.movieLength || "";
-//             document.getElementById("movieDescription") .value = data.movieDescription || "";
-//             document.getElementById("ageRequirement")   .value = data.ageRequirement || "";
-//             document.getElementById("moviePosterUrl")   .value = data.moviePosterUrl || "";
-//         } catch (error){
-//             console.error("Error fetching data", error);
-//             alert("failed to DEEZ NUTS.");
-//         }
-//     }
-// })
-//
-// //show movie js backend
-
 //Default elementer
 const moviesTableDiv = document.createElement("div");
 moviesTableDiv.id = "showMoviesTableDiv";
@@ -139,29 +109,6 @@ function populateTableOfMovies() {
         showInfoTable.appendChild(row);
     });
 }
-
-// //Virker ikke endnu - mangler endpoint i backenden
-//
-//
-// fetch('http://localhost:8080/showMovieScreenings')
-//     .then(response => {
-//         if (!response.ok) {
-//             throw new Error('Promise not OK');
-//         }
-//         return response.json();
-//     })
-//     .then(data => {
-//         // const filteredMovieScreenings = data.filter(movieScreening => movieScreening.hasPlayed === true)
-//         // listOfMovieScreenings.push(...filteredMovieScreenings);
-//         listOfMovieScreenings.push(...data);
-//
-//         console.log(listOfMovieScreenings);
-//         populateTableOfMovieScreenings();
-//     })
-//     .catch(error => {
-//         console.error('Some error', error);
-//     });
-
 
 //viser og populater filmvisningstabellen
 function populateTableOfMovieScreenings() {
@@ -282,6 +229,7 @@ function openEditModal(movieId) {
             //alt logik her fra dom manipulationen
             let editMovieModal = document.createElement("div");
             editMovieModal.id = "employeeCreateEditMovie"
+
             editMovieModal.className ="employeeCreateEditMovies"
 
             //Label og input til film titel:
@@ -318,6 +266,7 @@ function openEditModal(movieId) {
             ageRequirementDropDown.hidden = true;
             ageRequirementDropDown.innerText = "Vælg aldersgrænse"
             ageRequirementSelect.appendChild(ageRequirementDropDown)
+      
             var ages = [10, 13, 18, 0]
             for (var i = 0; i < ages.length; i++) {
                 var age = ages[i];
@@ -326,7 +275,6 @@ function openEditModal(movieId) {
                 option.innerText = age;
                 ageRequirementSelect.appendChild(option)
             }
-
 
             // label og input til plakat url
             let moviePosterLabel = document.createElement("label")
@@ -345,6 +293,7 @@ function openEditModal(movieId) {
 
             //så skal vi skulle kunne gemme det.
             let saveEditedFiles = document.createElement("button")
+
             saveEditedFiles.innerHTML ="Gem ændringer";
             saveEditedFiles.type = "button";
             saveEditedFiles.id = "saveEditedFiles";
@@ -380,8 +329,6 @@ function openEditModal(movieId) {
 
                 console.log(updatedMovie);
             });
-
-
 
             editMovieModal.appendChild(movieTitleLabel);
             editMovieModal.appendChild(movieTitleInput);
