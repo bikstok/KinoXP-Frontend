@@ -13,11 +13,14 @@ document.addEventListener("DOMContentLoaded", () => {
 function showMenu() {
     const mainDiv = document.querySelector('.main');
 
-    // const burgerMenu = document.createElement('button');
-    // const burgerMenuIcon = document.createElement('i');
-    // burgerMenuIcon.classList.add("menuIcon material-icons")
-    //
-    // burgerMenu.appendChild(burgerMenuIcon)
+    const burgerMenu = document.createElement('button');
+    const burgerMenuIcon = document.createElement('i');
+    burgerMenuIcon.classList.add("menuIcon material-icons")
+
+    burgerMenu.appendChild(burgerMenuIcon)
+    document.body.appendChild(burgerMenu)
+    burgerMenu.textContent = 'Menu';
+
 
 
 
