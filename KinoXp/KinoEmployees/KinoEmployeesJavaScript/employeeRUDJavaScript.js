@@ -234,11 +234,10 @@ function deleteMovie(movie) {
 }
 
 function deleteMovieScreening(movieScreening) {
-    console.log("Vi når ind i metoden")
     if (!confirm("Er du sikker på, at du vil slette filvisningen: " + movieScreening.movieTitle)) {
         return;
     }
-    fetch(`http://localhost:8080/deactivateMovieScreening${movieScreening.movieScreeningId}`, {
+    fetch(`http://localhost:8080/deactivateMovieScreening/${movieScreening.movieScreeningId}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
