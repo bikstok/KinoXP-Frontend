@@ -241,11 +241,20 @@ function openEditModal(movieId) {
         .then(response => response.json())
         .then(data => {
             console.log(data)
+            const currentMovie = data;
             //alt logik her fra dom manipulationen
             let editMovieModal = document.createElement("div");
             editMovieModal.id = "employeeCreateEditMovie"
-
             editMovieModal.className ="employeeCreateEditMovies"
+
+            // close button
+            const closeButton = document.createElement("button");
+            closeButton.innerHTML = "X"
+            closeButton.classList.add("closeButton");
+            closeButton.addEventListener("click", (e) => {
+                editMovieModal.remove();
+                rows.style.display = "table";
+            })
 
             //Label og input til film titel:
             let movieTitleLabel = document.createElement("label");
@@ -315,16 +324,16 @@ function openEditModal(movieId) {
             saveEditedFiles.name = "saveEditedFiles";
 
             saveEditedFiles.addEventListener("click", () =>{
-
                 const updatedMovie = {
-                    movieId: movie.movieId,
+                    movieId: currentMovie.movieId,
                     movieTitle: movieTitleInput.value,
                     movieLength: movieLengthInput.value,
                     movieDescription:movieDescriptionInput.value,
                     ageRequirement:ageRequirementSelect.value,
                     moviePosterUrl:moviePosterInput.value,
-                    inRotation: movie.inRotation
+                    inRotation: currentMovie.inRotation,
                 }
+
 
                 fetch("http://localhost:8080/updateMovie", {
                     method: "PUT",
@@ -343,28 +352,32 @@ function openEditModal(movieId) {
                     });
 
                 console.log(updatedMovie);
+
+                editMovieModal.remove();
+                rows.style.display = "table";
             });
+
+            editMovieModal.appendChild(closeButton);
 
             editMovieModal.appendChild(movieTitleLabel);
             editMovieModal.appendChild(movieTitleInput);
             //tilføjer et linjeskift for testens skyld. Så kan vi altid kigge i styles senere:
-            editMovieModal.appendChild(document.createElement("br"));
+
 
             editMovieModal.appendChild(movieLengthLabel);
             editMovieModal.appendChild(movieLengthInput)
-            editMovieModal.appendChild(document.createElement("br"));
+
 
             editMovieModal.appendChild(movieDescriptionLabel);
             editMovieModal.appendChild(movieDescriptionInput);
-            editMovieModal.appendChild(document.createElement("br"));
+
 
             editMovieModal.appendChild(ageRequirementLabel);
             editMovieModal.appendChild(ageRequirementSelect);
-            editMovieModal.appendChild(document.createElement("br"));
+
 
             editMovieModal.appendChild(moviePosterLabel);
             editMovieModal.appendChild(moviePosterInput);
-            editMovieModal.appendChild(document.createElement("br"));
 
             editMovieModal.appendChild(saveEditedFiles);
 
