@@ -145,7 +145,7 @@ function populateTableOfMovieScreenings() {
         editButton.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
         editButton.className = "td__buttonTd";
         editButton.addEventListener("click",function (){
-            updateMovieScreeningForm();
+            updateMovieScreeningForm(movieScreening);
         })
 
         row.innerHTML = `
@@ -386,8 +386,12 @@ function openEditModal(movieId) {
             console.error("Error fetching movie data:", error);
         });
 }
+
 //---------------------------Tilføjelse af modalet til DOM'en omkring redigering af filmvisninger---------------------------
-function updateMovieScreeningForm() {
+async function updateMovieScreeningForm(movieScreening) {
+
+    const listOfMoviesToEdit = await returnListOfMovies();
+    const listOfScreeningTimeSlots = await returnListOfScreeningTimeSlots();
 
     const showMoviesTableDiv = document.getElementById("showMoviesTableDiv");
     showMoviesTableDiv.style.display = "none";
@@ -410,13 +414,42 @@ function updateMovieScreeningForm() {
     movieTitleLabel.textContent = 'Film titel';
     const movieTitle = document.createElement("select")
 
+    listOfMoviesToEdit.forEach(movie => {
+        console.log(movie);
+        let option = document.createElement("option");
+        option.innerText = movie.movieTitle;
+        movieTitle.appendChild(option);
+    })
+
     const auditoriumLabel = document.createElement("label");
     auditoriumLabel.textContent = 'Film sal';
     const auditorium = document.createElement("select");
+    const optionAuditorium1 = document.createElement("option");
+    optionAuditorium1.innerText = "Sal 1";
+    optionAuditorium1.value = 1;
+    const optionAuditorium2 = document.createElement("option");
+    optionAuditorium2.innerText = "Sal 2";
+    optionAuditorium2.value = 2;
+    auditorium.appendChild(optionAuditorium1);
+    auditorium.appendChild(optionAuditorium2);
+
+    const selectedAuditoriumNumber = movieScreening.auditorium.auditoriumNumber;
+    if(selectedAuditoriumNumber === 1)  {
+        optionAuditorium1.selected = true;
+    } else if (selectedAuditoriumNumber === 2)  {
+        optionAuditorium2.selected = true;
+    }
 
     const screeningTimeLabel = document.createElement("label");
     screeningTimeLabel.textContent = 'Tidspunkt';
     const screeningTime = document.createElement("select");
+
+    listOfScreeningTimeSlots.forEach(screeningTimeSlot => {
+        let option = document.createElement("option");
+        option.innerText = formatScreeningTimeEnum(screeningTimeSlot);
+        option.value = screeningTimeSlot;
+        screeningTime.appendChild(option);
+    })
 
     const screeningDateLabel = document.createElement("label");
     screeningDateLabel.textContent = 'Dato';
@@ -444,4 +477,22 @@ function updateMovieScreeningForm() {
 
     mainDiv.appendChild(creatMovieScreeningForm)
     document.body.appendChild(mainDiv);
+}
+
+async function returnListOfMovies ()  {
+
+    const response = await fetch("http://localhost:8080/movies");
+        if(!response.ok)    {
+            throw new Error("Could not fetch list of movies");
+        }
+    return await response.json();
+}
+
+async function returnListOfScreeningTimeSlots ()  {
+
+    const response = await fetch("http://localhost:8080/getScreeningTimeSlots");
+    if(!response.ok)    {
+        throw new Error("Could not fetch list of Screening time slots");
+    }
+    return await response.json();
 }
