@@ -264,7 +264,6 @@ function createMovieScreeningForm() {
     const screeningTimeLabel = document.createElement("label");
     screeningTimeLabel.textContent = 'Tidspunkt';
     const screeningTime = document.createElement("select");
-    const listOfTimeslots = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00"];
     for (let i = 0; i < listOfTimeslots.length; i++) {
         const timeOption = document.createElement("option")
         timeOption.innerText = listOfTimeslots[i]
@@ -280,6 +279,9 @@ function createMovieScreeningForm() {
     submitButton.type = 'button';
     submitButton.id = 'submitButton';
     submitButton.textContent = 'Opret Filmvisning';
+
+    auditorium.addEventListener("change", () => updateAvailableTimeSlots(auditorium, screeningDate));
+    screeningDate.addEventListener("change", () => updateAvailableTimeSlots(auditorium, screeningDate));
 
     //Tilføjelse af movies til selecten
     fetch("http://localhost:8080/movies")
@@ -318,7 +320,6 @@ function createMovieScreeningForm() {
     document.body.appendChild(mainDiv);
 
 
-
     submitButton.addEventListener("click", () => {
 
         const movieScreening = {
@@ -352,3 +353,23 @@ function createMovieScreeningForm() {
         })
     })
 }
+
+const listOfTimeslots = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00"];
+
+function updateAvailableTimeSlots(auditorium, screeningDate) {
+
+    const selectedAuditoriumNumber = auditorium.options[auditorium.selectedIndex].getAttribute("data-id");
+    const selectedScreeningDate = screeningDate.value;
+
+    if (!selectedAuditoriumNumber || !selectedScreeningDate) {
+        return
+    }
+
+    console.log("Tjekker tiderne for d. " + selectedScreeningDate + " i sal: " + selectedAuditoriumNumber)
+
+    fetch(`http://localhost:8080/movieScreenings/${selectedAuditoriumNumber}/${selectedScreeningDate}`)
+        .then(response => response.json())
+        .then(movieScreenings => movieScreenings)
+
+}
+
