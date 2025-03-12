@@ -362,7 +362,21 @@ function updateAvailableTimeSlots(auditorium, screeningDate) {
 
     fetch(`http://localhost:8080/movieScreenings/${selectedAuditoriumNumber}/${selectedScreeningDate}`)
         .then(response => response.json())
-        .then(movieScreenings => movieScreenings)
+        .then(movieScreenings => {
+            console.log(movieScreenings)
+
+            const bookedTimes = movieScreenings.map(screening =>
+                screening.screeningTime.replace("TIME_", "").replace("_", ":").replace("_", "")
+            );
+
+            console.log(bookedTimes)
+
+            const availableTimes = listOfTimeslots.filter(time => !bookedTimes.includes(time));
+
+            console.log("Ledige tider:", availableTimes);
+
+
+        })
 
 }
 
