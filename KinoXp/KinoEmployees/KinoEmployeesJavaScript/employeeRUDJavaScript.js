@@ -1,4 +1,4 @@
-//Default elementer
+//Default elementer som bliver brugt i updateMovieScreeningForm
 const moviesTableDiv = document.createElement("div");
 moviesTableDiv.id = "showMoviesTableDiv";
 moviesTableDiv.classList.add("showMoviesTableDiv");
@@ -57,6 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+//---------------------------Se film oversigt---------------------------
+//---------------------------Populate Table of movies metoden her---------------------------
 
 function populateTableOfMovies() {
     showInfoTable.innerHTML = "";
@@ -110,7 +112,8 @@ function populateTableOfMovies() {
     });
 }
 
-//viser og populater filmvisningstabellen
+//---------------------------Se Film Oversigt Sceening---------------------------
+//---------------------------Viser og populater filmvisningstabellen---------------------------
 function populateTableOfMovieScreenings() {
 
     showInfoTable.innerHTML = "";
@@ -161,8 +164,8 @@ function populateTableOfMovieScreenings() {
     })
 }
 
-
-// Sletter en film og sætter variablen inRotation til false i DB.
+//---------------------------Film Oversigt---------------------------
+//---------------------------Sletter en film og sætter variablen inRotation til false i DB---------------------------
 function deleteMovie(movie) {
     if (!confirm("Er du sikker på, at du vil slette filmen: " + movie.movieTitle)) {
         return;
@@ -192,7 +195,8 @@ function deleteMovie(movie) {
             console.log(error);
         })
 }
-
+//---------------------------Film Screening Oversigt---------------------------
+//---------------------------Sletter en film og sætter moviescreeningId til inactive i DB---------------------------
 function deleteMovieScreening(movieScreening) {
     if (!confirm("Er du sikker på, at du vil slette filvisningen: " + movieScreening.movieTitle)) {
         return;
@@ -221,8 +225,7 @@ function deleteMovieScreening(movieScreening) {
             console.log(error);
         })
 }
-
-//Formatter - TIME_12_00 til 12:00
+//---------------------------Formatter - TIME_12_00 til 12:00---------------------------
 function formatScreeningTimeEnum(screeningTime) {
     screeningTime.split();
     let formattetScreeningTime = "";
@@ -232,7 +235,7 @@ function formatScreeningTimeEnum(screeningTime) {
     return formattetScreeningTime
 }
 
-// Opens a modal that populates the data from the selected movie and then stores it
+//---------------------------Opens a modal that populates the data from the selected movie and then stores it---------------------------
 function openEditModal(movieId) {
     console.log("Vi er inde i metoden")
     const rows = document.getElementById("showMoviesTable")
@@ -242,6 +245,7 @@ function openEditModal(movieId) {
         .then(data => {
             console.log(data)
             const currentMovie = data;
+
             //alt logik her fra dom manipulationen
             let editMovieModal = document.createElement("div");
             editMovieModal.id = "employeeCreateEditMovie"
@@ -308,14 +312,14 @@ function openEditModal(movieId) {
             moviePosterInput.id = "moviePosterUrl";
             moviePosterInput.name = "moviePosterUrl";
 
-            //så skal vi vel fylde vores nye layout ud med data fra filmen man har valgt.
+            //fylder vores nye layout med data fra filmen man har valgt.
             movieTitleInput.value = data.movieTitle || "";
             movieLengthInput.value = data.movieLength || "";
             movieDescriptionInput.value = data.movieDescription || "";
             ageRequirementSelect.value = data.ageRequirement || "";
             moviePosterInput.value = data.moviePosterUrl || "";
 
-            //så skal vi skulle kunne gemme det.
+            //Gem function
             let saveEditedFiles = document.createElement("button")
 
             saveEditedFiles.innerHTML ="Gem ændringer";
@@ -361,20 +365,15 @@ function openEditModal(movieId) {
 
             editMovieModal.appendChild(movieTitleLabel);
             editMovieModal.appendChild(movieTitleInput);
-            //tilføjer et linjeskift for testens skyld. Så kan vi altid kigge i styles senere:
-
 
             editMovieModal.appendChild(movieLengthLabel);
             editMovieModal.appendChild(movieLengthInput)
 
-
             editMovieModal.appendChild(movieDescriptionLabel);
             editMovieModal.appendChild(movieDescriptionInput);
 
-
             editMovieModal.appendChild(ageRequirementLabel);
             editMovieModal.appendChild(ageRequirementSelect);
-
 
             editMovieModal.appendChild(moviePosterLabel);
             editMovieModal.appendChild(moviePosterInput);
@@ -387,8 +386,7 @@ function openEditModal(movieId) {
             console.error("Error fetching movie data:", error);
         });
 }
-
-//Tilføjelse af modalet til DOM'en omkring redigering af filmvisninger
+//---------------------------Tilføjelse af modalet til DOM'en omkring redigering af filmvisninger---------------------------
 function updateMovieScreeningForm() {
 
     const showMoviesTableDiv = document.getElementById("showMoviesTableDiv");
