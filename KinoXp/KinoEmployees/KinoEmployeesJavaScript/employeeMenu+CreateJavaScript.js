@@ -22,7 +22,7 @@ function showMenu() {
     burgerMenuIcon.innerText = "menu";
 
     burgerMenu.appendChild(burgerMenuIcon)
-    mainDiv.    appendChild(burgerMenu)
+    mainDiv.appendChild(burgerMenu)
 
 
     burgerMenu.addEventListener('click', (e) => {
@@ -53,7 +53,6 @@ function showMenu() {
             mainDiv.append(popUpModal);
         }
     });
-
 
 
     const menuContainer = document.createElement("div");
@@ -255,10 +254,22 @@ function createMovieScreeningForm() {
     const auditoriumLabel = document.createElement("label");
     auditoriumLabel.textContent = 'Film sal';
     const auditorium = document.createElement("select");
+    const auditoriumOption1 = document.createElement("option");
+    auditoriumOption1.innerText = "Sal 1"
+    auditoriumOption1.setAttribute("data-id", 1)
+    const auditoriumOption2 = document.createElement("option");
+    auditoriumOption2.innerText = "Sal 2"
+    auditoriumOption2.setAttribute("data-id", 2)
 
     const screeningTimeLabel = document.createElement("label");
     screeningTimeLabel.textContent = 'Tidspunkt';
     const screeningTime = document.createElement("select");
+    const listOfTimeslots = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00"];
+    for (let i = 0; i < listOfTimeslots.length; i++) {
+        const timeOption = document.createElement("option")
+        timeOption.innerText = listOfTimeslots[i]
+        screeningTime.appendChild(timeOption)
+    }
 
     const screeningDateLabel = document.createElement("label");
     screeningDateLabel.textContent = 'Dato';
@@ -269,6 +280,24 @@ function createMovieScreeningForm() {
     submitButton.type = 'button';
     submitButton.id = 'submitButton';
     submitButton.textContent = 'Opret Filmvisning';
+
+    //Tilføjelse af movies til selecten
+    fetch("http://localhost:8080/movies")
+        .then(response => response.json())
+        .then(listOfmovies => {
+            console.log(listOfmovies)
+
+            for (let i = 0; i < listOfmovies.length; i++) {
+                const movieOption = document.createElement("option")
+                movieOption.innerText = listOfmovies[i].movieTitle;
+                movieOption.setAttribute("data-id", listOfmovies[i].movieId);
+                movie.appendChild(movieOption)
+            }
+
+        })
+    //Tilføjelse af salen til selecten
+    auditorium.appendChild(auditoriumOption1)
+    auditorium.appendChild(auditoriumOption2)
 
 
     creatMovieScreeningForm.appendChild(closeButton)
@@ -287,6 +316,8 @@ function createMovieScreeningForm() {
 
     mainDiv.appendChild(creatMovieScreeningForm)
     document.body.appendChild(mainDiv);
+
+
 
     submitButton.addEventListener("click", () => {
 
