@@ -86,7 +86,7 @@ function populateTableOfMovies() {
 
         let editButton = document.createElement("button");
         editButton.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
-        editButton.addEventListener("click",function (){
+        editButton.addEventListener("click", function () {
             openEditModal(movie.movieId);
         })
 
@@ -141,7 +141,7 @@ function populateTableOfMovieScreenings() {
         let editButton = document.createElement("button");
         editButton.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
         editButton.className = "td__buttonTd";
-        editButton.addEventListener("click",function (){
+        editButton.addEventListener("click", function () {
             updateMovieScreeningForm(movieScreening);
         })
 
@@ -171,7 +171,6 @@ function deleteMovie(movie) {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
-
             },
             body: JSON.stringify({movieId: movie.movieId})
         }
@@ -245,7 +244,7 @@ function openEditModal(movieId) {
             //alt logik her fra dom manipulationen
             let editMovieModal = document.createElement("div");
             editMovieModal.id = "employeeCreateEditMovie"
-            editMovieModal.className ="employeeCreateEditMovies"
+            editMovieModal.className = "employeeCreateEditMovies"
 
             // close button
             const closeButton = document.createElement("button");
@@ -290,7 +289,7 @@ function openEditModal(movieId) {
             ageRequirementDropDown.hidden = true;
             ageRequirementDropDown.innerText = "Vælg aldersgrænse"
             ageRequirementSelect.appendChild(ageRequirementDropDown)
-      
+
             var ages = [10, 13, 18, 0]
             for (var i = 0; i < ages.length; i++) {
                 var age = ages[i];
@@ -318,19 +317,19 @@ function openEditModal(movieId) {
             //så skal vi skulle kunne gemme det.
             let saveEditedFiles = document.createElement("button")
 
-            saveEditedFiles.innerHTML ="Gem ændringer";
+            saveEditedFiles.innerHTML = "Gem ændringer";
             saveEditedFiles.type = "button";
             saveEditedFiles.id = "saveEditedFiles";
             saveEditedFiles.name = "saveEditedFiles";
 
-            saveEditedFiles.addEventListener("click", () =>{
+            saveEditedFiles.addEventListener("click", () => {
                 const updatedMovie = {
                     movieId: currentMovie.movieId,
                     movieTitle: movieTitleInput.value,
                     movieLength: movieLengthInput.value,
-                    movieDescription:movieDescriptionInput.value,
-                    ageRequirement:ageRequirementSelect.value,
-                    moviePosterUrl:moviePosterInput.value,
+                    movieDescription: movieDescriptionInput.value,
+                    ageRequirement: ageRequirementSelect.value,
+                    moviePosterUrl: moviePosterInput.value,
                     inRotation: currentMovie.inRotation,
                 }
 
@@ -419,6 +418,7 @@ async function updateMovieScreeningForm(movieScreening) {
         console.log(movie);
         let option = document.createElement("option");
         option.innerText = movie.movieTitle;
+        option.setAttribute("movieId", movie.movieId);
         movieTitle.appendChild(option);
     })
 
@@ -428,16 +428,18 @@ async function updateMovieScreeningForm(movieScreening) {
     const optionAuditorium1 = document.createElement("option");
     optionAuditorium1.innerText = "Sal 1";
     optionAuditorium1.value = 1;
+    optionAuditorium1.setAttribute("auditoriumId", 1);
     const optionAuditorium2 = document.createElement("option");
     optionAuditorium2.innerText = "Sal 2";
     optionAuditorium2.value = 2;
+    optionAuditorium2.setAttribute("auditoriumId", 2);
     auditorium.appendChild(optionAuditorium1);
     auditorium.appendChild(optionAuditorium2);
 
     const selectedAuditoriumNumber = movieScreening.auditorium.auditoriumNumber;
-    if(selectedAuditoriumNumber === 1)  {
+    if (selectedAuditoriumNumber === 1) {
         optionAuditorium1.selected = true;
-    } else if (selectedAuditoriumNumber === 2)  {
+    } else if (selectedAuditoriumNumber === 2) {
         optionAuditorium2.selected = true;
     }
 
@@ -454,12 +456,33 @@ async function updateMovieScreeningForm(movieScreening) {
 
     const screeningDateLabel = document.createElement("label");
     screeningDateLabel.textContent = 'Dato';
-    const screeningDate = document.createElement("select");
+    const screeningDate = document.createElement("input");
+    screeningDate.type = "date";
+    screeningDate.value = movieScreening.screeningDate;
 
     const submitButton = document.createElement('button');
     submitButton.type = 'button';
     submitButton.id = 'submitButton';
-    submitButton.textContent = 'Opret Filmvisning';
+    submitButton.textContent = 'Gem ændringer';
+
+    submitButton.addEventListener("click", () => {
+        let movieScreeningJson = {
+            movieScreeningId: movieScreening.movieScreeningId,
+            movie: fetchMovieById(movieTitle.getAttribute("movieId")),
+            screeningTime: screeningTime.value,
+            screeningDate: screeningDate.value,
+            hasPlayed: movieScreening.hasPlayed,
+            auditorium: fetchAuditoriumById(auditorium.getAttribute("auditoriumId"))
+        }
+
+        fetch(`http://localhost:8080/updateMovieScreening`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(movieScreeningJson)
+        })
+    })
 
 
     creatMovieScreeningForm.appendChild(closeButton)
@@ -480,20 +503,37 @@ async function updateMovieScreeningForm(movieScreening) {
     document.body.appendChild(mainDiv);
 }
 
-async function returnListOfMovies ()  {
+async function returnListOfMovies() {
 
     const response = await fetch("http://localhost:8080/movies");
+    if (!response.ok) {
+        throw new Error("Could not fetch list of movies");
+    }
+    return await response.json();
+}
+
+async function returnListOfScreeningTimeSlots() {
+
+    const response = await fetch("http://localhost:8080/getScreeningTimeSlots");
+    if (!response.ok) {
+        throw new Error("Could not fetch list of Screening time slots");
+    }
+    return await response.json();
+}
+
+async function fetchMovieById (movieId) {
+    const response = await fetch(`http://localhost:8080/${movieId}`);
         if(!response.ok)    {
-            throw new Error("Could not fetch list of movies");
+            throw new Error("Could not fetch movie");
         }
     return await response.json();
 }
 
-async function returnListOfScreeningTimeSlots ()  {
-
-    const response = await fetch("http://localhost:8080/getScreeningTimeSlots");
+async function fetchAuditoriumById (auditoriumId) {
+    console.log(auditoriumId)
+    const response = await fetch(`http://localhost:8080/getAuditoriumById/${auditoriumId}`);
     if(!response.ok)    {
-        throw new Error("Could not fetch list of Screening time slots");
+        throw new Error("Could not fetch movie");
     }
     return await response.json();
 }
