@@ -1,21 +1,15 @@
+//---------------------------AddEventListener som viser default items---------------------------
 document.addEventListener("DOMContentLoaded", () => {
     showMenu() //Hvad der vises som default
-
-
 });
 
-// <button className="hamburger">
-//     <!-- material icons https://material.io/resources/icons/ -->
-//     <i className="menuIcon material-icons">menu</i>
-//     <i className="closeIcon material-icons">close</i>
-// </button>
-
+//---------------------------function showMenu---------------------------
 function showMenu() {
     const mainDiv = document.querySelector('.main');
 
+    //burgermenu'en
     const burgerMenu = document.createElement('button');
     burgerMenu.classList.add("burger-menu");
-
 
     const burgerMenuIcon = document.createElement('i');
     burgerMenuIcon.classList.add("material-icons")
@@ -24,11 +18,9 @@ function showMenu() {
     burgerMenu.appendChild(burgerMenuIcon)
     mainDiv.appendChild(burgerMenu)
 
-
     burgerMenu.addEventListener('click', (e) => {
 
         let existingModal = document.querySelector('.pop-up');
-
         if (existingModal) {
 
             existingModal.remove();
@@ -38,26 +30,23 @@ function showMenu() {
 
             burgerMenuIcon.innerText = "close";
 
-
             const popUpModal = document.createElement("div");
             popUpModal.classList.add("pop-up");
-
 
             const logOutButton = document.createElement("button");
             logOutButton.classList.add("logOutButton");
             logOutButton.innerText = "Logout";
-
 
             popUpModal.append(logOutButton);
 
             mainDiv.append(popUpModal);
         }
     });
-
-
+    //Container for menu'en
     const menuContainer = document.createElement("div");
     menuContainer.id = "menuContainer";
 
+    //Opret ny film
     const createMovie = document.createElement("button");
     createMovie.id = "createMovie";
     createMovie.classList.add("menuButton")
@@ -66,6 +55,7 @@ function showMenu() {
         createMovieForm()
     })
 
+    //Opret ny filmvisning
     const createMovieScreening = document.createElement("button");
     createMovieScreening.id = "createMovieScreening";
     createMovieScreening.classList.add("menuButton")
@@ -74,24 +64,27 @@ function showMenu() {
         createMovieScreeningForm()
     })
 
+    //Se filmoversigt
     const showMovies = document.createElement('a');
     showMovies.id = "showMovies";
     showMovies.classList.add("menuButton")
     showMovies.innerText = "Se Filmoversigt";
     showMovies.href = "dummyRUDPage.html?type=movies";
 
+    //Se filmvisnings-oversigt
     const showMoviesScreening = document.createElement("a");
     showMoviesScreening.id = "showMovieScreening";
     showMoviesScreening.classList.add("menuButton")
     showMoviesScreening.innerText = "Se Filmvisningsoversigt";
     showMoviesScreening.href = "dummyRUDPage.html?type=screenings";
 
-
+    //Se Bookingsoversigt
     const showBookings = document.createElement('a');
     showBookings.id = "showBookings";
     showBookings.classList.add("menuButton")
     showBookings.innerText = "Se Bookingsoversigt"
 
+    //appending til menuContainer
     menuContainer.appendChild(createMovie);
     menuContainer.appendChild(createMovieScreening);
     menuContainer.appendChild(showMovies);
@@ -100,17 +93,18 @@ function showMenu() {
 
     mainDiv.appendChild(menuContainer);
 };
-
+//---------------------------function CreateMovieForm---------------------------
 function createMovieForm() {
     const menuContainer = document.getElementById("menuContainer");
     menuContainer.style.display = "none";
     const mainDiv = document.querySelector('.main');
 
-
+    //oprettelse af 'form'
     const form = document.createElement('form');
     form.id = "movieForm";
     form.classList.add('employeeCreateEditMovies');
 
+    //Lukke knap
     const closeButton = document.createElement("button");
     closeButton.innerHTML = "X"
     closeButton.classList.add("closeButton");
@@ -118,7 +112,7 @@ function createMovieForm() {
         form.remove();
         menuContainer.style.display = "flex";
     })
-
+    //label & input movieTitle
     const titleLabel = document.createElement('label');
     titleLabel.textContent = 'Film titel';
     const titleInput = document.createElement('input');
@@ -126,7 +120,7 @@ function createMovieForm() {
     titleInput.id = 'movieTitle';
     titleInput.name = 'movieTitle';
 
-
+    //label & input Film længde
     const lengthLabel = document.createElement('label');
     lengthLabel.textContent = 'Film længde';
     const lengthInput = document.createElement('input');
@@ -134,7 +128,7 @@ function createMovieForm() {
     lengthInput.id = 'movieLength';
     lengthInput.name = 'movieLength';
 
-
+    //label & input movieDescription
     const descriptionLabel = document.createElement('label');
     descriptionLabel.textContent = 'Beskrivelse';
     const descriptionInput = document.createElement('input');
@@ -142,13 +136,14 @@ function createMovieForm() {
     descriptionInput.id = 'movieDescription';
     descriptionInput.name = 'movieDescription';
 
-
+    //label & input ageRequirement
     const ageLabel = document.createElement('label');
     ageLabel.textContent = 'Aldersgrænse';
     const ageSelect = document.createElement('select');
     ageSelect.id = 'ageRequirement';
     ageSelect.name = 'ageRequirement';
 
+    //label & input age
     const ageOptions = ['Vælg aldersgrænse', '12', '16', '18', '0'];
     ageOptions.forEach(age => {
         const option = document.createElement('option');
@@ -157,7 +152,7 @@ function createMovieForm() {
         ageSelect.appendChild(option);
     });
 
-
+    //label & input moviePosterUrl
     const posterLabel = document.createElement('label');
     posterLabel.textContent = 'Plakat URL/JPEG/PNG';
     const posterInput = document.createElement('input');
@@ -165,13 +160,13 @@ function createMovieForm() {
     posterInput.id = 'moviePosterUrl';
     posterInput.name = 'moviePosterUrl';
 
-
+    //label & input Opret film
     const submitButton = document.createElement('button');
     submitButton.type = 'button';
     submitButton.id = 'submitButton';
     submitButton.textContent = 'Opret Film';
 
-
+    //appending to form
     form.appendChild(closeButton)
     form.appendChild(titleLabel);
     form.appendChild(titleInput);
@@ -185,9 +180,7 @@ function createMovieForm() {
     form.appendChild(posterInput);
     form.appendChild(submitButton);
 
-
     mainDiv.appendChild(form);
-
 
     submitButton.addEventListener("click", event => {
         event.preventDefault();
@@ -316,7 +309,6 @@ function createMovieScreeningForm() {
 
     mainDiv.appendChild(creatMovieScreeningForm)
     document.body.appendChild(mainDiv);
-
 
 
     submitButton.addEventListener("click", () => {

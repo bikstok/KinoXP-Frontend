@@ -1,4 +1,4 @@
-//Default elementer som bliver brugt i updateMovieScreeningForm
+//---------------------------Default elementer som bliver brugt i updateMovieScreeningForm---------------------------
 const moviesTableDiv = document.createElement("div");
 moviesTableDiv.id = "showMoviesTableDiv";
 moviesTableDiv.classList.add("showMoviesTableDiv");
@@ -13,7 +13,7 @@ document.body.appendChild(moviesTableDiv);
 const listOfMovies = [];
 const listOfMovieScreenings = [];
 
-//Tjekker om det er movies eller screenings der er med som parametre
+//---------------------------Tjekker om det er movies eller screenings der er med som parametre---------------------------
 document.addEventListener("DOMContentLoaded", () => {
     const params = new URLSearchParams(window.location.search);
     const type = params.get("type");
