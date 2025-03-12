@@ -35,6 +35,8 @@ body {
 
 /* Date div styles */
 .date-div {
+    display: flex;
+    justify-content: center ;
     width: 100%;
     max-width: 1260px;
     margin: 0 auto;
@@ -45,6 +47,7 @@ body {
     font-size: 18px;
     box-sizing: border-box;
 }
+
 
 /* Date input and label wrapper */
 .date-wrapper {
@@ -70,6 +73,39 @@ body {
     color: #333;
     cursor: pointer;
 }
+
+.arrow-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;      /* adjust width */
+    height: 32px;     /* adjust height */
+    margin: 0 10px;   /* space between the arrows and date label */
+    background-color: #e8e7df;
+    color: #333;
+    border: 1px solid #ad4c4c;
+    border-radius: 50%; /* circle button */
+    font-size: 18px;  /* arrow size */
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.arrow-button:hover {
+    background-color: #ad4c4c;
+    color: #fff;
+    border-color: #ad4c4c;
+}
+
+.rightArrow {
+    padding-left: 8px;
+}
+
+.leftArrow {
+    padding-right: 8px;
+
+}
+
+
 
 /* Movie container styles */
 #movie-container {

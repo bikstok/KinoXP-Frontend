@@ -2,9 +2,7 @@
 const commonWidth = '100%';
 const commonMaxWidth = '1260px';
 
-// Apply styles to movieContainer
 const movieContainer = document.getElementById('movie-container');
-
 
 // Create headerDiv
 const headerDiv = document.createElement('div');
@@ -13,38 +11,95 @@ headerDiv.classList.add('header-div');
 
 // Create dateDiv
 const dateDiv = document.createElement('div');
-const today = new Date();
-const options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
-
-dateDiv.textContent = today.toLocaleDateString('da-DK', options);
 dateDiv.className = 'date-div';
 
-const dateInput = document.createElement('input');
-dateInput.type = 'date';
+const today = new Date();
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-// Set its initial value to today (ISO format)
-const todayISO = today.toISOString().split('T')[0];
-dateInput.value = todayISO;
-dateInput.className = 'date-input';
+// Arrows
+const leftArrow = document.createElement('button');
+leftArrow.className = 'leftArrow';
 
-// Create a wrapper inside the dateDiv for both text and input (optional but cleaner)
+const rightArrow = document.createElement('button');
+rightArrow.className = 'rightArrow';
+
+leftArrow.innerHTML = "◀";
+rightArrow.innerHTML = "▶";
+
+// Optional: Add classes for styling
+leftArrow.classList.add('arrow-button', 'left-arrow');
+rightArrow.classList.add('arrow-button', 'right-arrow');
+
+// Date Wrapper (contains label + date input)
 const dateWrapper = document.createElement('div');
 dateWrapper.classList.add('date-wrapper');
 
-// Create a label for displaying the formatted date
+// Date label
 const dateLabel = document.createElement('div');
 dateLabel.textContent = today.toLocaleDateString('da-DK', options);
-dateWrapper.classList.add = ('date-label');
+dateLabel.classList.add('date-label');
 
-// Clear dateDiv's content and append the wrapper
-dateDiv.textContent = '';  // Remove previous textContent
-dateWrapper.appendChild(dateLabel);  // Add the date text
-dateWrapper.appendChild(dateInput);  // Add the date input
-dateDiv.appendChild(dateWrapper);    // Add everything to the main dateDiv
+// Date input
+const dateInput = document.createElement('input');
+dateInput.type = 'date';
+dateInput.value = today.toISOString().split('T')[0];
+dateInput.className = 'date-input';
+
+// Put label and input inside wrapper
+dateWrapper.appendChild(dateLabel);
+dateWrapper.appendChild(dateInput);
+
+// Add left arrow, wrapper, and right arrow to dateDiv (THIS ORDER)
+dateDiv.appendChild(leftArrow);
+dateDiv.appendChild(dateWrapper);
+dateDiv.appendChild(rightArrow);
 
 // Insert the divs into the body, above the movie container
 document.body.insertBefore(headerDiv, movieContainer);
 document.body.insertBefore(dateDiv, movieContainer);
+
+
+
+
+rightArrow.addEventListener('click', (e) => {
+    console.log('click');
+
+    const currentDateString = dateInput.value;
+    const currentDate = new Date(currentDateString);
+
+    // Add one day
+    currentDate.setDate(currentDate.getDate() + 1);
+
+    const newDateISO = currentDate.toISOString().split('T')[0];
+
+    // Update the date input and label
+    dateInput.value = newDateISO;
+    dateLabel.textContent = currentDate.toLocaleDateString('da-DK', options);
+
+    // ✅ Call the function with the updated date
+    populateMoviesScreenings(newDateISO);
+});
+
+leftArrow.addEventListener('click', (e) => {
+    console.log('click');
+
+    const currentDateString = dateInput.value;
+    const currentDate = new Date(currentDateString);
+
+    // Add one day
+    currentDate.setDate(currentDate.getDate() - 1);
+
+    const newDateISO = currentDate.toISOString().split('T')[0];
+
+    // Update the date input and label
+    dateInput.value = newDateISO;
+    dateLabel.textContent = currentDate.toLocaleDateString('da-DK', options);
+
+    // ✅ Call the function with the updated date
+    populateMoviesScreenings(newDateISO);
+});
+
+
 
 // When the user selects a different date
 dateInput.addEventListener('change', () => {
