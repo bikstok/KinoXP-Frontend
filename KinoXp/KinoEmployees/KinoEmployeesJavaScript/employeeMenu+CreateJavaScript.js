@@ -93,6 +93,7 @@ function showMenu() {
 
     mainDiv.appendChild(menuContainer);
 };
+
 //---------------------------function CreateMovieForm---------------------------
 function createMovieForm() {
     const menuContainer = document.getElementById("menuContainer");
@@ -257,11 +258,7 @@ function createMovieScreeningForm() {
     const screeningTimeLabel = document.createElement("label");
     screeningTimeLabel.textContent = 'Tidspunkt';
     const screeningTime = document.createElement("select");
-    for (let i = 0; i < listOfTimeslots.length; i++) {
-        const timeOption = document.createElement("option")
-        timeOption.innerText = listOfTimeslots[i]
-        screeningTime.appendChild(timeOption)
-    }
+    screeningTime.id = "screeningTime";
 
     const screeningDateLabel = document.createElement("label");
     screeningDateLabel.textContent = 'Dato';
@@ -315,22 +312,20 @@ function createMovieScreeningForm() {
 
     submitButton.addEventListener("click", () => {
 
+       const auditoriumNumber = auditorium.options[auditorium.selectedIndex].getAttribute("data-id");
         const movieScreening = {
             movie: {
-                movieTitle: movie.movieTitle,
-                movieLength: movie.movieLength,
-                movieDescription: movie.movieDescription,
-                ageRequirement: movie.ageRequirement,
-                moviePosterUrl: movie.moviePosterUrl,
-                inRotation: movie.inRotation
+                movieId: movie.options[movie.selectedIndex].getAttribute("data-id")
             },
             auditorium: {
-                auditoriumNumber: auditorium.auditoriumNumber
+                auditoriumId: auditoriumNumber
             },
-            screeningTime: screeningTime,
-            screeningDate: screeningDate,
-            hasPlayed: false
-        }
+            screeningTime: formatTimeToEnum(screeningTime.value),
+            screeningDate: screeningDate.value
+        };
+
+
+        console.log(movieScreening)
 
 
         fetch("http://localhost:8080/movieScreening", {
@@ -341,15 +336,18 @@ function createMovieScreeningForm() {
             if (!response.ok) {
                 console.log("Error:", response.status);
             } else {
-                alert("Filmvisningen er blevet oprettet")
+                alert("Filmvisningen: " + movie.options[movie.selectedIndex].innerText + " i sal " + auditoriumNumber + " Kl: " + screeningTime.value + " Er oprettet i databasen");
+                creatMovieScreeningForm.remove();
+                menuContainer.style.display = "flex";
             }
         })
     })
 }
 
-const listOfTimeslots = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00"];
 
 function updateAvailableTimeSlots(auditorium, screeningDate) {
+    const listOfTimeslots = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00", "22:00"];
+
 
     const selectedAuditoriumNumber = auditorium.options[auditorium.selectedIndex].getAttribute("data-id");
     const selectedScreeningDate = screeningDate.value;
@@ -375,8 +373,28 @@ function updateAvailableTimeSlots(auditorium, screeningDate) {
 
             console.log("Ledige tider:", availableTimes);
 
+            updateTimeDropdown(availableTimes)
 
         })
+}
 
+function updateTimeDropdown(availableTimes) {
+    const screeningTime = document.getElementById("screeningTime");
+
+
+    screeningTime.innerHTML = "";
+
+    availableTimes.forEach(time => {
+        const timeOption = document.createElement("option");
+        timeOption.innerText = time;
+        screeningTime.appendChild(timeOption);
+    });
+}
+
+function formatTimeToEnum(timeString) {
+    if (!timeString) return null;
+
+    const [hours, minutes] = timeString.split(":");
+    return `TIME_${hours}_${minutes}`;
 }
 
