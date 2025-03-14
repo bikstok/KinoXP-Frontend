@@ -473,6 +473,7 @@ async function updateMovieScreeningForm(movieScreening) {
             hasPlayed: movieScreening.hasPlayed,
             auditorium: fetchAuditoriumById(auditorium.getAttribute("auditoriumId"))
         }
+        console.log(movieScreeningJson);
 
         fetch(`http://localhost:8080/updateMovieScreening`, {
             method: 'PUT',
@@ -521,6 +522,7 @@ async function returnListOfScreeningTimeSlots() {
 }
 
 async function fetchMovieById (movieId) {
+    console.log(movieId)
     const response = await fetch(`http://localhost:8080/${movieId}`);
         if(!response.ok)    {
             throw new Error("Could not fetch movie");
