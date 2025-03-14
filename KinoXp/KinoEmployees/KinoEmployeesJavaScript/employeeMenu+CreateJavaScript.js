@@ -196,7 +196,7 @@ function createMovieForm() {
 
         console.log("Sending Data:", movie); // Debugging log
 
-        fetch("http://localhost:8080/movie", {
+        fetch("https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/movie", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -274,7 +274,7 @@ function createMovieScreeningForm() {
     screeningDate.addEventListener("change", () => updateAvailableTimeSlots(auditorium, screeningDate));
 
     //Tilføjelse af movies til selecten
-    fetch("http://localhost:8080/movies")
+    fetch("https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/movies")
         .then(response => response.json())
         .then(listOfmovies => {
             console.log(listOfmovies)
@@ -328,7 +328,7 @@ function createMovieScreeningForm() {
         console.log(movieScreening)
 
 
-        fetch("http://localhost:8080/movieScreening", {
+        fetch("https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/movieScreening", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(movieScreening)
@@ -358,7 +358,7 @@ function updateAvailableTimeSlots(auditorium, screeningDate) {
 
     console.log("Tjekker tiderne for d. " + selectedScreeningDate + " i sal: " + selectedAuditoriumNumber)
 
-    fetch(`http://localhost:8080/movieScreenings/${selectedAuditoriumNumber}/${selectedScreeningDate}`)
+    fetch(`https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/movieScreenings/${selectedAuditoriumNumber}/${selectedScreeningDate}`)
         .then(response => response.json())
         .then(movieScreenings => {
             console.log(movieScreenings)
