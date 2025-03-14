@@ -4,40 +4,13 @@
     <meta charset="UTF-8">
     <title>employeeRUDPage</title>
     <link rel="stylesheet" href="../KinoEmployeesStyles/employeesStyles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inconsolata:wght@200..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
-
-<!-- Rediger film modal -->
-<div id="editMovieModal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <form id="movieForm" class="employeeCreateEditMovies">
-            <label>Film title</label>
-            <input type="text" id="movieTitle" name="movieTitle">
-
-            <label>Film længde</label>
-            <input type="number" id="movieLength" name="movieLength">
-
-            <label>Beskrivelse</label>
-            <input type="text" id="movieDescription" name="movieDescription">
-
-            <select id="ageRequirement" name="ageRequirement">
-                <option hidden="hidden">Vælg aldersgrænse</option>
-                <option value="12">12</option>
-                <option value="16">16</option>
-                <option value="18">18</option>
-                <option value="0">Alle</option>
-            </select>
-
-            <label>Plakat URL/JPEG/PNG</label>
-            <input type="text" id="moviePosterUrl" name="moviePosterUrl">
-
-            <button type="button" id="submitButton">Gem Ændringer</button>
-        </form>
-    </div>
-</div>
-
+<script src="https://kit.fontawesome.com/2d3c392192.js" crossorigin="anonymous"></script>
+<body>
 <script src="../KinoEmployeesJavaScript/employeeRUDJavaScript.js"></script>
 </body>
 </html>

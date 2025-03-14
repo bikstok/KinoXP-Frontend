@@ -69,14 +69,14 @@ function showMenu() {
     showMovies.id = "showMovies";
     showMovies.classList.add("menuButton")
     showMovies.innerText = "Se Filmoversigt";
-    showMovies.href = "dummyRUDPage.html?type=movies";
+    showMovies.href = "employeeRUDPage.html?type=movies";
 
     //Se filmvisnings-oversigt
     const showMoviesScreening = document.createElement("a");
     showMoviesScreening.id = "showMovieScreening";
     showMoviesScreening.classList.add("menuButton")
     showMoviesScreening.innerText = "Se Filmvisningsoversigt";
-    showMoviesScreening.href = "dummyRUDPage.html?type=screenings";
+    showMoviesScreening.href = "employeeRUDPage.html?type=screenings";
 
     //Se Bookingsoversigt
     const showBookings = document.createElement('a');
