@@ -328,7 +328,7 @@ function createMovieScreeningForm() {
         console.log(movieScreening)
 
 
-        fetch("http://localhost:8080/movieScreening", {
+        fetch("https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/movieScreening", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(movieScreening)
@@ -358,7 +358,7 @@ function updateAvailableTimeSlots(auditorium, screeningDate) {
 
     console.log("Tjekker tiderne for d. " + selectedScreeningDate + " i sal: " + selectedAuditoriumNumber)
 
-    fetch(`http://localhost:8080/movieScreenings/${selectedAuditoriumNumber}/${selectedScreeningDate}`)
+    fetch(`https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/movieScreenings/${selectedAuditoriumNumber}/${selectedScreeningDate}`)
         .then(response => response.json())
         .then(movieScreenings => {
             console.log(movieScreenings)

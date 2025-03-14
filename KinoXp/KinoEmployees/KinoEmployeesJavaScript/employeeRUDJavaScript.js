@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const type = params.get("type");
 
     if (type === "movies") {
-        fetch('http://localhost:8080/movies')
+        fetch('https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/movies')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Promise not OK');
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     } else if (type === "screenings") {
 
-        fetch('http://localhost:8080/showMovieScreenings')
+        fetch('https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/showMovieScreenings')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Promise not OK');
@@ -170,7 +170,7 @@ function deleteMovie(movie) {
     if (!confirm("Er du sikker på, at du vil slette filmen: " + movie.movieTitle)) {
         return;
     }
-    fetch(`http://localhost:8080/${movie.movieId}`, {
+    fetch(`https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/${movie.movieId}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
@@ -200,7 +200,7 @@ function deleteMovieScreening(movieScreening) {
     if (!confirm("Er du sikker på, at du vil slette filvisningen: " + movieScreening.movieTitle)) {
         return;
     }
-    fetch(`http://localhost:8080/deactivateMovieScreening/${movieScreening.movieScreeningId}`, {
+    fetch(`https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/${movieScreening.movieScreeningId}`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
@@ -239,7 +239,7 @@ function openEditModal(movieId) {
     console.log("Vi er inde i metoden")
     const rows = document.getElementById("showMoviesTable")
     rows.style.display = "none";
-    fetch(`http://localhost:8080/${movieId}`)
+    fetch(`https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/${movieId}`)
         .then(response => response.json())
         .then(data => {
             console.log(data)
@@ -338,7 +338,7 @@ function openEditModal(movieId) {
                 }
 
 
-                fetch("http://localhost:8080/updateMovie", {
+                fetch("https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/updateMovie", {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json"
@@ -475,7 +475,7 @@ async function updateMovieScreeningForm(movieScreening) {
         }
         console.log(movieScreeningJson);
 
-        fetch(`http://localhost:8080/updateMovieScreening`, {
+        fetch(`https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/updateMovieScreening`, {
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json"
@@ -505,7 +505,7 @@ async function updateMovieScreeningForm(movieScreening) {
 
 async function returnListOfMovies() {
 
-    const response = await fetch("http://localhost:8080/movies");
+    const response = await fetch("https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/movies");
     if (!response.ok) {
         throw new Error("Could not fetch list of movies");
     }
@@ -514,7 +514,7 @@ async function returnListOfMovies() {
 
 async function returnListOfScreeningTimeSlots() {
 
-    const response = await fetch("http://localhost:8080/getScreeningTimeSlots");
+    const response = await fetch("https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/getScreeningTimeSlots");
     if (!response.ok) {
         throw new Error("Could not fetch list of Screening time slots");
     }
@@ -523,7 +523,7 @@ async function returnListOfScreeningTimeSlots() {
 
 async function fetchMovieById (movieId) {
     console.log(movieId)
-    const response = await fetch(`http://localhost:8080/${movieId}`);
+    const response = await fetch(`https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/${movieId}`);
         if(!response.ok)    {
             throw new Error("Could not fetch movie");
         }
@@ -532,7 +532,7 @@ async function fetchMovieById (movieId) {
 
 async function fetchAuditoriumById (auditoriumId) {
     console.log(auditoriumId)
-    const response = await fetch(`http://localhost:8080/getAuditoriumById/${auditoriumId}`);
+    const response = await fetch(`https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/getAuditoriumById/${auditoriumId}`);
     if(!response.ok)    {
         throw new Error("Could not fetch movie");
     }

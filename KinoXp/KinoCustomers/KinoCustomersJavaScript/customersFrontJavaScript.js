@@ -143,7 +143,7 @@ function groupByTitleAndDate(screenings) {
 function populateMoviesScreenings(selectedDate) {
     let movieScreenings = [];
 
-    fetch('http://localhost:8080/showMovieScreenings')
+    fetch('https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/showMovieScreenings')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Promise not OK');
