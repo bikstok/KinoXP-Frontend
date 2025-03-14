@@ -110,7 +110,7 @@ leftArrow.addEventListener('click', (e) => {
 });
 
 loginButton.onclick = function () {
-    window.location.href = "../../KinoEmployees/KinoEmployeesPages/employeeMenu+CreatePage.html";
+    window.location.href = "../../KinoEmployees/KinoEmployeesPages/employeeMenuCreatePage.html";
 
 };
 
