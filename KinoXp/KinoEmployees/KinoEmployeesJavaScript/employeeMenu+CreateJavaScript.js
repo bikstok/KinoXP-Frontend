@@ -196,7 +196,7 @@ function createMovieForm() {
 
         console.log("Sending Data:", movie); // Debugging log
 
-        fetch("http://localhost:8080/movie", {
+        fetch("https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/movie", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -274,7 +274,7 @@ function createMovieScreeningForm() {
     screeningDate.addEventListener("change", () => updateAvailableTimeSlots(auditorium, screeningDate));
 
     //Tilføjelse af movies til selecten
-    fetch("http://localhost:8080/movies")
+    fetch("https://kinoxpapi-hqhfffgncxdhf6bu.northeurope-01.azurewebsites.net/movies")
         .then(response => response.json())
         .then(listOfmovies => {
             console.log(listOfmovies)
