@@ -45,6 +45,12 @@ dateInput.type = 'date';
 dateInput.value = today.toISOString().split('T')[0];
 dateInput.className = 'date-input';
 
+const loginButton  = document.createElement('button');
+
+loginButton.innerHTML = 'LOGIN';
+loginButton.className = 'login-button';
+document.body.appendChild(loginButton);
+
 // Put label and input inside wrapper
 dateWrapper.appendChild(dateLabel);
 dateWrapper.appendChild(dateInput);
@@ -67,18 +73,20 @@ rightArrow.addEventListener('click', (e) => {
     const currentDateString = dateInput.value;
     const currentDate = new Date(currentDateString);
 
-    // Add one day
+
     currentDate.setDate(currentDate.getDate() + 1);
 
     const newDateISO = currentDate.toISOString().split('T')[0];
 
-    // Update the date input and label
+
     dateInput.value = newDateISO;
     dateLabel.textContent = currentDate.toLocaleDateString('da-DK', options);
 
-    // ✅ Call the function with the updated date
+
     populateMoviesScreenings(newDateISO);
 });
+
+
 
 leftArrow.addEventListener('click', (e) => {
     console.log('click');
@@ -86,20 +94,25 @@ leftArrow.addEventListener('click', (e) => {
     const currentDateString = dateInput.value;
     const currentDate = new Date(currentDateString);
 
-    // Add one day
-    currentDate.setDate(currentDate.getDate() - 1);
+    const today = new Date();
 
-    const newDateISO = currentDate.toISOString().split('T')[0];
+    // If currentDate is already today or earlier, don't go back in time
+    if (currentDate.toDateString() !== today.toDateString()) {
+        currentDate.setDate(currentDate.getDate() - 1);  // Only subtract 1 day if not today
 
-    // Update the date input and label
-    dateInput.value = newDateISO;
-    dateLabel.textContent = currentDate.toLocaleDateString('da-DK', options);
+        const newDateISO = currentDate.toISOString().split('T')[0];
+        dateInput.value = newDateISO;
+        dateLabel.textContent = currentDate.toLocaleDateString('da-DK', options);
 
-    // ✅ Call the function with the updated date
-    populateMoviesScreenings(newDateISO);
+        // Update the movie screenings for the new date
+        populateMoviesScreenings(newDateISO);
+    }
 });
 
+loginButton.onclick = function () {
+    window.location.href = "../../KinoEmployees/KinoEmployeesPages/employeeMenu+CreatePage.html";
 
+};
 
 // When the user selects a different date
 dateInput.addEventListener('change', () => {
@@ -118,7 +131,7 @@ function groupByTitleAndDate(screenings) {
 
     screenings.forEach(screening => {
         const movieId = screening.movie.movieId;
-        const screeningDate = screening.screeningDate; // Assuming format "YYYY-MM-DD"
+        const screeningDate = screening.screeningDate;
 
         if (!moviesMap.has(movieId)) {
             moviesMap.set(movieId, {
